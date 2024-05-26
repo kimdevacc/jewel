@@ -14,6 +14,8 @@ import { CategoryComponent } from 'src/app/pages/category/list/category.componen
 import { CategoryFormComponent } from 'src/app/pages/category/form/category-form.component';
 import { ItemComponent } from 'src/app/pages/items/list/item.component';
 import { ItemFormComponent } from 'src/app/pages/items/form/item-form.component';
+import { CustomerComponent } from 'src/app/pages/customer/list/customer.component';
+import { CustomerFormComponent } from 'src/app/pages/customer/form/customer-form.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -32,7 +34,9 @@ import { ItemFormComponent } from 'src/app/pages/items/form/item-form.component'
 		ItemComponent,
 		ItemFormComponent,
 		IconsComponent,
-		MapsComponent
+		MapsComponent,
+		CustomerComponent,
+		CustomerFormComponent
 	]
 })
 

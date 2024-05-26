@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
-
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PurchaseController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,6 +34,18 @@ Route::post('/items', [ItemController::class, 'store']);
 Route::get('/items/{id}', [ItemController::class, 'show']);
 Route::patch('/items/{id}', [ItemController::class, 'update']);
 Route::delete('/items/{id}', [ItemController::class, 'destroy']);
+
+Route::get('/customers', [CustomerController::class, 'index']);
+Route::post('/customers', [CustomerController::class, 'store']);
+Route::get('/customers/{id}', [CustomerController::class, 'show']);
+Route::patch('/customers/{id}', [CustomerController::class, 'update']);
+Route::delete('/customers/{id}', [CustomerController::class, 'destroy']);
+
+Route::get('/purchases', [PurchaseController::class, 'index']);
+Route::post('/purchases', [PurchaseController::class, 'store']);
+Route::get('/purchases/{id}', [PurchaseController::class, 'show']);
+Route::patch('/purchases/{id}', [PurchaseController::class, 'update']);
+Route::delete('/purchases/{id}', [PurchaseController::class, 'destroy']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

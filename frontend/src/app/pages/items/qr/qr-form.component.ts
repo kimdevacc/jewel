@@ -22,7 +22,8 @@ export class ItemQrFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        const currentURL = encodeURIComponent(window.location.href);
+        const buildUrl = `http://localhost:4200/#/customer/purchase/confirm/${this.routerId}`;
+        const currentURL = encodeURIComponent(buildUrl);
 		this.currentURL = `http://192.168.1.3:8000/api/open-in-desktop?url=${currentURL}`;
     }
 

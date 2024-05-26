@@ -46,7 +46,7 @@ export class PurchaseService {
 
     updatePurchase(purchase: Purchase): Observable<Purchase> {
         const url = `${this.apiUrl}/${purchase.id}`;
-        return this.http.put<Purchase>(url, purchase).pipe(
+        return this.http.patch<Purchase>(url, purchase).pipe(
             tap((response) => {
                 console.log('Purchase updated successfully:', response);
             }),

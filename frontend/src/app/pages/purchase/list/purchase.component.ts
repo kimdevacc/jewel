@@ -30,6 +30,20 @@ export class PurchaseComponent implements OnInit {
     }
     
     confirmOrder(id: number) {
-        this.router.navigate(['admin/item/qr', id]);
-    }
+        this.purchaseService.getPurchase(id).subscribe(purchase => {
+            console.log(purchase);
+            let tempPurchase = purchase['data'];
+            if(tempPurchase) {
+                tempPurchase.status = "Confirmed";
+                this.purchaseService.updatePurchase(tempPurchase).subscribe(updatedPurchase => {
+                    console.log('Purchase updated successfully:', updatedPurchase);
+                    this.loadPurchases();
+                }, error => {
+                    console.error('Error updating purchase:', error);
+                });
+            }
+        }, error => {
+            console.error('Error fetching purchase:', error);
+        });
+    }    
 }

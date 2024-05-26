@@ -12,6 +12,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
+import { QrCodeModule } from 'ng-qrcode';
+import { CustomerLayoutComponent } from './layouts/customer-layout/customer-layout.component';
 
 
 @NgModule({
@@ -22,12 +24,14 @@ import { ComponentsModule } from './components/components.module';
 		ComponentsModule,
 		NgbModule,
 		RouterModule,
-		AppRoutingModule
+		AppRoutingModule,
+		QrCodeModule
 	],
 	declarations: [
 		AppComponent,
 		AdminLayoutComponent,
-		AuthLayoutComponent
+		AuthLayoutComponent,
+		CustomerLayoutComponent
 	],
 	providers: [],
 	bootstrap: [AppComponent]

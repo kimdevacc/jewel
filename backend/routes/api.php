@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\URLController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +18,8 @@ use App\Http\Controllers\PurchaseController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('open-in-desktop', [URLController::class, 'open_in_desktop']);
 
 Route::get('get_access_token', [FacebookController::class, 'get_access_token']);
 Route::get('get_latest_post', [FacebookController::class, 'get_latest_post']);

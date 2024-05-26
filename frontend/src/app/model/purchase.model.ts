@@ -3,6 +3,7 @@ export interface Purchase {
     item_code: string;
     ordered_by: string;
     qty: number;
+    status: string;
     created_at?: Date;
     updated_at?: Date;
     deleted_at?: Date;

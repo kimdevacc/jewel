@@ -44,5 +44,9 @@ export class ItemComponent implements OnInit {
     
     viewItem(id: number) {
         this.router.navigate(['admin/item/form', id]);
-    }    
+    }
+    
+    generateQrCode(id: number) {
+        this.router.navigate(['admin/item/qr', id]);
+    }
 }

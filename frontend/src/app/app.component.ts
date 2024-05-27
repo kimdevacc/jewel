@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 	constructor() { }
 
 	ngOnInit(): void {
-		if(this.userRole === 'admin') {
+		// if(this.userRole === 'admin') {
 			const socket = new WebSocket('ws://localhost:3000');
 			socket.onopen = () => {
 				console.log('Connected to WebSocket server');
@@ -25,6 +25,6 @@ export class AppComponent implements OnInit {
 					window.open(obj?.message, '_blank');
 				}
 			};
-		}
+		// }
 	}
 }

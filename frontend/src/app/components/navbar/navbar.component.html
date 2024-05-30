@@ -15,10 +15,9 @@
 				</div>
 			</div>
 		</form> -->
-		<!-- User -->
 		<ul class="navbar-nav align-items-center d-none d-md-flex">
 			<li class="nav-item" ngbDropdown placement="bottom-right">
-				<a class="nav-link pr-0" role="button" ngbDropdownToggle>
+				<a class="nav-link" role="button" ngbDropdownToggle>
 					<div class="media align-items-center">
 						<span class="avatar avatar-sm rounded-circle">
 							<img alt="Image placeholder" src="assets/img/theme/team-4-800x800.jpg">
@@ -43,6 +42,16 @@
 					</a>
 				</div>
 			</li>
+			<li class="nav-item" ngbDropdown placement="bottom-right">
+				<a class="nav-link nav-link-icon" role="button" ngbDropdownToggle>
+					<i class="ni ni-bell-55"></i>
+					<span class="badge badge-danger" *ngIf="items && items.length > 0">{{ items.length }}</span>
+				</a>
+				<div class="dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
+					<a *ngFor="let i of items" class="dropdown-item" (click)="viewItem(i.category, i.id)">{{ i.item_code }}</a>
+				</div>
+			</li>
+			
 		</ul>
 	</div>
 </nav>

@@ -31,6 +31,18 @@
                     <label for="category">Category</label>
                     <input type="text" class="form-control" id="itemName" [(ngModel)]="item.category" name="itemCategory" disabled>
                 </div>
+                <div class="form-group">
+                    <label for="qty">Quantity</label>
+                    <input type="number" class="form-control" id="qty" [(ngModel)]="item.qty" name="qty" (ngModelChange)="calculateTotalAmount()">
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" class="form-control" id="qty" [(ngModel)]="item.price" name="price" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Total Amount</label>
+                    <input type="number" class="form-control" id="amount" [(ngModel)]="TotalAmount" name="amount" disabled>
+                </div>
             </div>
         </div>
     </div>

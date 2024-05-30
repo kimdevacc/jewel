@@ -34,7 +34,10 @@ Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
 Route::get('/items', [ItemController::class, 'index']);
 Route::post('/items', [ItemController::class, 'store']);
-Route::get('/items/{id}', [ItemController::class, 'show']);
+Route::get('/items', [ItemController::class, 'show_by_category']);
+Route::get('/items/{category}', [ItemController::class, 'get_items_by_category']);
+Route::get('/items-with-less-stock', [ItemController::class, 'items_with_less_stock']);
+Route::get('/item/{itemId}', [ItemController::class, 'show']);
 Route::patch('/items/{id}', [ItemController::class, 'update']);
 Route::delete('/items/{id}', [ItemController::class, 'destroy']);
 

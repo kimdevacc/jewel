@@ -12,13 +12,14 @@ import { IconsComponent } from '../../pages/icons/icons.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryComponent } from 'src/app/pages/category/list/category.component';
 import { CategoryFormComponent } from 'src/app/pages/category/form/category-form.component';
-import { ItemComponent } from 'src/app/pages/items/list/item.component';
 import { ItemFormComponent } from 'src/app/pages/items/form/item-form.component';
 import { CustomerComponent } from 'src/app/pages/customer/list/customer.component';
 import { CustomerFormComponent } from 'src/app/pages/customer/form/customer-form.component';
 import { ItemQrFormComponent } from 'src/app/pages/items/qr/qr-form.component';
 import { QrCodeModule } from 'ng-qrcode';
 import { PurchaseComponent } from 'src/app/pages/purchase/list/purchase.component';
+import { ItemCategoryComponent } from 'src/app/pages/items/list-category/item-category.component';
+import { ItemsComponent } from 'src/app/pages/items/items/items.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -35,7 +36,8 @@ import { PurchaseComponent } from 'src/app/pages/purchase/list/purchase.componen
 		DashboardComponent,
 		CategoryComponent,
 		CategoryFormComponent,
-		ItemComponent,
+		ItemCategoryComponent,
+		ItemsComponent,
 		ItemFormComponent,
 		ItemQrFormComponent,
 		IconsComponent,

@@ -12,6 +12,7 @@ class Purchase extends Model
         'item_code',
         'ordered_by',
         'qty',
-        'status'
+        'status',
+        'total_amount'
     ];
 }

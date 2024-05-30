@@ -19,6 +19,7 @@ class CreatePurchasesTable extends Migration
             $table->string('ordered_by')->nullable();
             $table->integer('qty')->nullable();
             $table->string('status')->nullable();
+            $table->integer('total_amount')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

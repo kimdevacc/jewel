@@ -21,18 +21,33 @@ class ItemController extends Controller
             'item_description' => $request->input('item_description'),
             'category' => $request->input('category'),
             'qty' => $request->input('qty'),
+            'price' => $request->input('price'),
         ]);
 
         return new ItemResource($item);
     }
 
-    public function show($id)
+    public function show($itemId)
     {
-        $item = Item::find($id);
+        $item = Item::find($itemId);
         if (!$item) {
             return response()->json(['message' => 'Item not found'], 404);
         }
         return new ItemResource($item);
+    }
+
+    public function show_by_category()
+    {
+        $items = Item::select('category', \DB::raw('COUNT(*) as total'))
+            ->groupBy('category')
+            ->get();
+        return $items;
+    }
+
+    public function get_items_by_category($category)
+    {
+        $items = Item::where('category', $category)->get();
+        return ItemResource::collection($items);
     }
 
     public function update(Request $request, $id)
@@ -52,5 +67,12 @@ class ItemController extends Controller
         $item->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function items_with_less_stock()
+    {
+        $items = Item::where('qty', '<', 5)->get();
+
+        return ItemResource::collection($items);
     }
 }

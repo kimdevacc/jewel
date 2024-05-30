@@ -22,6 +22,24 @@ export class ItemService {
         );
     }
 
+    getItemsByCategory(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/items`).pipe(
+            catchError(error => {
+                console.error('Error fetching items:', error);
+                return of([]);
+            })
+        );
+    }
+
+    getItemListByCategory(category: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/items/${category}`).pipe(
+            catchError(error => {
+                console.error('Error fetching items:', error);
+                return of([]);
+            })
+        );
+    }
+
     saveItem(item: Item): Observable<Item> {
         return this.http.post<Item>(`${this.apiUrl}/items`, item).pipe(
             tap((response) => {
@@ -58,14 +76,23 @@ export class ItemService {
         );
     }
 
-    getItemById(id: any): Observable<Item> {
-        return this.http.get<Item>(`${this.apiUrl}/items/${id}`).pipe(
+    getItemById(itemId: any): Observable<Item> {
+        return this.http.get<Item>(`${this.apiUrl}/item/${itemId}`).pipe(
             tap((response) => {
                 return response;
             }),
             catchError(error => {
                 console.error('Error fetching item:', error);
                 return of();
+            })
+        );
+    }
+
+    getItemsWithLessStock(): Observable<Item[]> {
+        return this.http.get<Item[]>(`${this.apiUrl}/items-with-less-stock`).pipe(
+            catchError(error => {
+                console.error('Error fetching items:', error);
+                return of([]);
             })
         );
     }

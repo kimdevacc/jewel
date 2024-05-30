@@ -11,10 +11,12 @@ import { ItemService } from 'src/app/services/item.service';
     styleUrls: ['./item-form.component.scss']
 })
 export class ItemFormComponent implements OnInit {
-    item: Item = { id: null, item_name: '', item_description: '', category: '', qty: null, item_code: '' };
+    item: Item = { id: null, item_name: '', item_description: '', category: '', qty: null, item_code: '', price: 0};
     categories: Category[] = [];
 
     routerId: string;
+    categoryName: string;
+    dateToday = new Date().toDateString();
 
     constructor(
         private categoryService: CategoryService,
@@ -24,15 +26,17 @@ export class ItemFormComponent implements OnInit {
     ) {
         this.route.params.subscribe(params => {
             this.routerId = params['id'];
+            this.categoryName = params['category'];
         });
     }
 
     ngOnInit() {
         this.loadCategories();
-        if(this.routerId) {
+        if(this.routerId != '0') {
             this.itemService.getItemById(this.routerId).subscribe(
                 (response) => {
                     this.item = response['data'];
+                    this.dateToday = new Date(this.item.created_at).toDateString();
                 },
                 (error) => {
                     // handle error
@@ -56,8 +60,7 @@ export class ItemFormComponent implements OnInit {
     saveItem() {
         this.itemService.saveItem(this.item).subscribe(
             (response) => {
-                console.log('Item saved successfully:', response);
-                this.navigateBack();
+                this.router.navigate(['admin/items/list', response['data'].category]);
             },
             (error) => {
                 console.error('Error saving item:', error);
@@ -68,9 +71,7 @@ export class ItemFormComponent implements OnInit {
     updateItem() {
         this.itemService.updateItem(this.item).subscribe(
             (response) => {
-                // handle success
-                console.log('Item updated successfully:', response);
-                this.navigateBack();
+                this.router.navigate(['admin/items/list', response['data'].category]);
             },
             (error) => {
                 // handle error
@@ -83,7 +84,7 @@ export class ItemFormComponent implements OnInit {
         this.itemService.deleteItem(this.item.id).subscribe(
             () => {
                 console.log('Item deleted successfully');
-                this.item = { id: null, item_name: '', item_description: '', category: null, qty: null, item_code: '' };
+                this.item = { id: null, item_name: '', item_description: '', category: null, qty: null, item_code: '', price: 0 };
                 this.navigateBack();
             },
             (error) => {
@@ -93,6 +94,6 @@ export class ItemFormComponent implements OnInit {
     }
 
     navigateBack() {
-        this.router.navigate(['admin/item']);
+        this.router.navigate(['admin/items/list', this.categoryName]);
     }
 }

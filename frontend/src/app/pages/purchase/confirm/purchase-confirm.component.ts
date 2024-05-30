@@ -13,7 +13,9 @@ export class PurchaseConfirmComponent implements OnInit {
     routerId: string;
     url = window.location.href;
 	currentURL: string = '';
-    item: Item = { id: null, item_name: '', item_description: '', category: '', qty: null, item_code: '' };
+    item: Item = { id: null, item_name: '', item_description: '', category: '', qty: null, item_code: '', price: 0 };
+
+    TotalAmount: number = 0;
 
     constructor(
         private route: ActivatedRoute,
@@ -30,6 +32,7 @@ export class PurchaseConfirmComponent implements OnInit {
             this.itemService.getItemById(this.routerId).subscribe(
                 (response) => {
                     this.item = response['data'];
+                    this.calculateTotalAmount();
                 },
                 (error) => {
                     // handle error
@@ -39,11 +42,19 @@ export class PurchaseConfirmComponent implements OnInit {
         }
     }
 
+    calculateTotalAmount() {
+        this.TotalAmount = this.item.price * this.item.qty;
+    }
+
     addToOrder() {
-        let purchase: Purchase = { id: 0, item_code: this.item.item_code, ordered_by: 'currentCustomer', qty: 1, status: 'New' };
+        let purchase: Purchase = { id: 0, item_code: this.item.item_code, ordered_by: 'currentCustomer', qty: 1, status: 'New', total_amount: this.TotalAmount };
         this.purchaseService.addPurchase(purchase).subscribe(
             (response) => {
-                window.close();
+                if(response['message'] === 'Item Out of Stock') {
+                    alert(response['message']);
+                } else {
+                    window.close();
+                }
             },
             (error) => {
                 console.error('Error saving item:', error);

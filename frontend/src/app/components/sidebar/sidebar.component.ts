@@ -12,7 +12,7 @@ export const ADMIN_ROUTES: RouteInfo[] = [
 	// { path: '/icons', title: 'Items', icon: 'ni-planet text-blue', class: '' },
 	// { path: '/maps', title: 'Maps', icon: 'ni-pin-3 text-orange', class: '' },
 	{ path: 'purchase', title: 'Purchases', icon: 'ni-cart text-orange', class: '' },
-	{ path: 'item', title: 'Items', icon: 'ni-bullet-list-67 text-red', class: '' },
+	{ path: 'item-by-category', title: 'Items', icon: 'ni-bullet-list-67 text-red', class: '' },
 	{ path: 'category', title: 'Category', icon: 'ni-pin-3 text-yellow', class: '' },
 	{ path: 'customer', title: 'Customer', icon: 'ni-single-02 text-blue', class: '' },
 	// { path: '/login', title: 'Login', icon: 'ni-key-25 text-info', class: '' },

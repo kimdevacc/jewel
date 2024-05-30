@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Purchase;
+use App\Models\Item;
 use App\Http\Resources\PurchaseResource;
 
 class PurchaseController extends Controller
@@ -16,8 +17,15 @@ class PurchaseController extends Controller
 
     public function store(Request $request)
     {
-        $purchase = Purchase::create($request->all());
-        return new PurchaseResource($purchase);
+        $item = Item::where('item_code', $request->item_code)->first();
+        if($item['qty'] > 0) {
+            $item['qty'] = $item['qty'] - $request->qty;
+            $item->update([$item['qty']]);
+            $purchase = Purchase::create($request->all());
+            return new PurchaseResource($purchase);
+        } else {
+            return response()->json(['message' => 'Item Out of Stock'], 200);
+        }
     }
 
     public function show($id)

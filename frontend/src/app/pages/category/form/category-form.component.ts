@@ -9,7 +9,9 @@ import { CategoryService } from 'src/app/services/category.service';
     styleUrls: ['./category-form.component.scss']
 })
 export class CategoryFormComponent implements OnInit {
-    category: Category = { id: null, category_name: '', created_at: null, updated_at: null };
+    category: Category = { id: null, category_name: '', supplier_name: '', sizes: '' };
+
+    sizesList: any[] = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'];
 
     routerId: string;
 
@@ -24,7 +26,7 @@ export class CategoryFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        if(this.routerId) {
+        if(this.routerId !== '0') {
             this.categoryService.getCategoryById(this.routerId).subscribe(
                 (response) => {
                     this.category = response['data'];
@@ -71,7 +73,7 @@ export class CategoryFormComponent implements OnInit {
                 // handle success
                 console.log('Category deleted successfully');
                 // Optionally reset the form
-                this.category = { id: null, category_name: '', created_at: null, updated_at: null };
+                this.category = { id: null, category_name: '', supplier_name: '', sizes: '' };
                 this.navigateBack();
             },
             (error) => {

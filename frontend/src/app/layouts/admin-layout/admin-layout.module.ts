@@ -20,6 +20,7 @@ import { QrCodeModule } from 'ng-qrcode';
 import { PurchaseComponent } from 'src/app/pages/purchase/list/purchase.component';
 import { ItemCategoryComponent } from 'src/app/pages/items/list-category/item-category.component';
 import { ItemsComponent } from 'src/app/pages/items/items/items.component';
+import { UserProfileComponent } from 'src/app/pages/user-profile/user-profile.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -43,7 +44,8 @@ import { ItemsComponent } from 'src/app/pages/items/items/items.component';
 		IconsComponent,
 		CustomerComponent,
 		CustomerFormComponent,
-		PurchaseComponent
+		PurchaseComponent,
+		UserProfileComponent
 	]
 })
 

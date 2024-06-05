@@ -11,9 +11,11 @@ import { Router } from '@angular/router';
 })
 export class ItemCategoryComponent implements OnInit {
     
-    itemsByCategory: any;
+    itemsByCategory: any[] = [];
 
-    constructor(private itemService: ItemService, private router: Router) { }
+    constructor(
+        private itemService: ItemService, 
+        private router: Router) { }
 
     ngOnInit() {
         this.loadItemsByCategory()

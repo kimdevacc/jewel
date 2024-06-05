@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Category } from '../model/category.model';
@@ -10,12 +10,16 @@ import { Category } from '../model/category.model';
 export class CategoryService {
 
     apiUrl = 'http://localhost:8000/api';
+    authToken: any = null;
+    authHeaders: any = null;
 
     constructor(private http: HttpClient) {
+        this.authToken = localStorage.getItem('authToken');
+        this.authHeaders = new HttpHeaders().set('Authorization', 'Bearer ' + this.authToken);
     }
 
     getCategories(): Observable<Category[]> {
-        return this.http.get<Category[]>(`${this.apiUrl}/categories`).pipe(
+        return this.http.get<Category[]>(`${this.apiUrl}/categories`, { headers: this.authHeaders }).pipe(
             catchError(error => {
                 console.error('Error fetching categories:', error);
                 return of([]);
@@ -24,7 +28,7 @@ export class CategoryService {
     }
 
     saveCategory(category: Category): Observable<Category> {
-        return this.http.post<Category>(`${this.apiUrl}/categories`, category).pipe(
+        return this.http.post<Category>(`${this.apiUrl}/categories`, category, { headers: this.authHeaders }).pipe(
             tap((response) => {
                 return response;
             }),
@@ -36,7 +40,7 @@ export class CategoryService {
     }
 
     updateCategory(category: Category): Observable<Category> {
-        return this.http.patch<Category>(`${this.apiUrl}/categories/${category.id}`, category).pipe(
+        return this.http.patch<Category>(`${this.apiUrl}/categories/${category.id}`, category, { headers: this.authHeaders }).pipe(
             tap((response) => {
                 return response;
             }),
@@ -48,7 +52,7 @@ export class CategoryService {
     }
 
     deleteCategory(id: number): Observable<any> {
-        return this.http.delete<any>(`${this.apiUrl}/categories/${id}`).pipe(
+        return this.http.delete<any>(`${this.apiUrl}/categories/${id}`, { headers: this.authHeaders }).pipe(
             tap((response) => {
                 return response;
             }),
@@ -60,7 +64,7 @@ export class CategoryService {
     }
 
     getCategoryById(id: any): Observable<Category> {
-        return this.http.get<Category>(`${this.apiUrl}/categories/${id}`).pipe(
+        return this.http.get<Category>(`${this.apiUrl}/categories/${id}`, { headers: this.authHeaders }).pipe(
             tap((response) => {
                 return response;
             }),

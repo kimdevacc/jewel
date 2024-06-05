@@ -4,6 +4,8 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 import { Router } from '@angular/router';
 import { ItemService } from 'src/app/services/item.service';
 import { Item } from 'src/app/model/item.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
 	selector: 'app-navbar',
@@ -15,18 +17,25 @@ export class NavbarComponent implements OnInit {
 	public listTitles: any[];
 	public location: Location;
 	items: Item[] = [];
+
+	currentUser: any = null;
+	fullName: any = "";
+
 	constructor(
 		location: Location, 
-		private element: ElementRef, 
 		private router: Router,
-		private itemService: ItemService
+		private itemService: ItemService,
+		private authService: AuthService,
+		private userService: UserService
 	) {
 		this.location = location;
+		this.currentUser = localStorage.getItem('currentUser');
 	}
 
 	ngOnInit() {
 		this.listTitles = ADMIN_ROUTES.filter(listTitle => listTitle);
 		this.getNotification();
+		this.getCurrentLoggedInUser();
 	}
 	getTitle() {
 		var titlee = this.location.prepareExternalUrl(this.location.path());
@@ -51,4 +60,24 @@ export class NavbarComponent implements OnInit {
 	viewItem(category: string, id: number) {
         this.router.navigate(['admin/items/form', category, id]);
     }
+
+	logout() {
+        this.authService.logout().subscribe(
+            () => {
+				this.router.navigate(['login']);
+            }
+        );
+    }
+
+	navigateToProfile() {
+		this.router.navigate(['admin/profile/form', this.currentUser]);
+	}
+
+	getCurrentLoggedInUser() {
+		this.userService.getUserById(this.currentUser).subscribe(
+			user => {
+				this.fullName = user['data'].first_name + " " + user['data'].last_name;
+			}
+		);
+	}
 }

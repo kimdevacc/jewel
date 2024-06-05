@@ -1,16 +1,31 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
-  constructor() {}
+export class LoginComponent {
 
-  ngOnInit() {
-  }
-  ngOnDestroy() {
-  }
+    credentials: any = { email: '', password: ''};
 
+    constructor(
+        private authService: AuthService,
+        private router: Router
+    ) { 
+    }
+
+    login() {
+		console.log(this.credentials);
+        this.authService.login(this.credentials).subscribe(
+            () => {
+                this.router.navigate(['admin/dashboard']);
+            },
+            error => {
+                alert("Invalid Credentials");
+            }
+        );
+    }
 }

@@ -11,6 +11,7 @@ import { ItemQrFormComponent } from 'src/app/pages/items/qr/qr-form.component';
 import { PurchaseComponent } from 'src/app/pages/purchase/list/purchase.component';
 import { ItemCategoryComponent } from 'src/app/pages/items/list-category/item-category.component';
 import { ItemsComponent } from 'src/app/pages/items/items/items.component';
+import { UserProfileComponent } from 'src/app/pages/user-profile/user-profile.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
@@ -20,8 +21,10 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'item-by-category', component: ItemCategoryComponent },
     { path: 'items/list/:category', component: ItemsComponent },
     { path: 'items/form/:category/:id', component: ItemFormComponent },
+    { path: 'items/form/:id', component: ItemFormComponent },
     { path: 'items/qr/:category/:id', component: ItemQrFormComponent },
     { path: 'icons', component: IconsComponent },
     { path: 'customer', component: CustomerComponent },
-    { path: 'customer/form/:id', component: CustomerFormComponent }
+    { path: 'customer/form/:id', component: CustomerFormComponent },
+    { path: 'profile/form/:id', component: UserProfileComponent }
 ];

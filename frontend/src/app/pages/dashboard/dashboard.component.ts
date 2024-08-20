@@ -33,6 +33,8 @@ export class DashboardComponent implements OnInit {
 	yesterdayPurchaseCount: number | undefined;
 	monthlyPurchaseCounts: number[] = [];
 
+	chartOrders = document.getElementById('chart-orders');
+
 	constructor(
 		private purchaseService: PurchaseService,
 		private customerService: CustomerService,
@@ -40,40 +42,18 @@ export class DashboardComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
 		this.loadPurchases();
 		this.loadCustomers();
 
-		console.log(this.newUsersCount);
-
-		this.datasets = [
-			[0, 20, 10, 30, 15, 40, 20, 60, 60],
-			[0, 20, 5, 25, 10, 30, 15, 40, 40]
-		];
-		this.data = this.datasets[0];
-
-
-		var chartOrders = document.getElementById('chart-orders');
-
 		parseOptions(Chart, chartOptions());
 
+		// var chartSales = document.getElementById('chart-sales');
 
-		if(this.monthlyPurchaseCounts) {
-			new Chart(chartOrders, {
-				type: 'bar',
-				options: chartExample2.options,
-				data: this.monthlyPurchaseCounts//chartExample2.data
-			});
-			console.log(this.monthlyPurchaseCounts)
-		}
-
-		var chartSales = document.getElementById('chart-sales');
-
-		this.salesChart = new Chart(chartSales, {
-			type: 'line',
-			options: chartExample1.options,
-			data: this.monthlyPurchaseCounts
-		});
+		// this.salesChart = new Chart(chartSales, {
+		// 	type: 'line',
+		// 	options: chartExample1.options,
+		// 	data: this.monthlyPurchaseCounts
+		// });
 	}
 
 	loadPurchases() {
@@ -141,9 +121,22 @@ export class DashboardComponent implements OnInit {
 			}
 		});
 		
-		// Set monthly counts
-		this.monthlyPurchaseCounts = monthlyCounts;
-		console.log("test", this.monthlyPurchaseCounts)
+		const data = {
+			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			datasets: [
+				{
+					label: "Sales",
+					data: monthlyCounts,
+					maxBarThickness: 20
+				}
+			]
+		}
+		var chartOrders = document.getElementById('chart-orders');
+		new Chart(chartOrders, {
+			type: 'bar',
+			options: chartExample2.options,
+			data: data//chartExample2.data
+		});
 	}
 
 	public updateOptions() {

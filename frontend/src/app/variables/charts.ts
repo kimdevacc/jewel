@@ -318,8 +318,8 @@ export const chartExample2 = {
 				{
 					ticks: {
 						callback: function (value) {
+							// return value * 10;
 							if (!(value % 10)) {
-								//return '$' + value + 'k'
 								return value;
 							}
 						}

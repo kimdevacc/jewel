@@ -15,9 +15,8 @@ class CategorySeeder extends Seeder
     public function run()
     {
 
-        \App\Models\Category::create(['category_name' => 'Smart Phome']);
-        \App\Models\Category::create(['category_name' => 'Apple Products']);
-        \App\Models\Category::create(['category_name' => 'Hair Care']);
-        \App\Models\Category::create(['category_name' => 'Cosmetics']);
+        \App\Models\Category::create(['category_name' => 'Food']);
+        \App\Models\Category::create(['category_name' => 'Health and Wellness']);
+        \App\Models\Category::create(['category_name' => 'Pandemic Essential Products']);
     }
 }

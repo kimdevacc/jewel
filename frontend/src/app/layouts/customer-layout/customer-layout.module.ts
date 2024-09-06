@@ -8,6 +8,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerLayoutRoutes } from './customer-layout.routing';
 import { PurchaseConfirmComponent } from 'src/app/pages/purchase/confirm/purchase-confirm.component';
+import { MineFunctionComponent } from 'src/app/pages/purchase/mine-function/mine-function.component';
 
 @NgModule({
 	imports: [
@@ -19,7 +20,8 @@ import { PurchaseConfirmComponent } from 'src/app/pages/purchase/confirm/purchas
 		ClipboardModule
 	],
 	declarations: [
-		PurchaseConfirmComponent
+		PurchaseConfirmComponent,
+		MineFunctionComponent
 	]
 })
 

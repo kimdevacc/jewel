@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\Barangay;
 
 class AuthController extends Controller
 {
@@ -12,18 +11,32 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+        // Attempt login with 'customers' guard
+        if (Auth::guard('customers')->attempt($credentials)) {
+            $user = Auth::guard('customers')->user();
             $token = $user->createToken('MyAppToken')->plainTextToken;
-            // Include user's role in the response
+
+            return response()->json([
+                'token' => $token,
+                'role' => 'customer',
+                'currentUser' => $user->id,
+            ], 200);
+        }
+
+        // Attempt login with 'web' guard
+        if (Auth::guard('web')->attempt($credentials)) {
+            $user = Auth::guard('web')->user();
+            $token = $user->createToken('MyAppToken')->plainTextToken;
+
             return response()->json([
                 'token' => $token,
                 'role' => $user->role,
                 'currentUser' => $user->id,
             ], 200);
-        } else {
-            return response()->json(['error' => 'Unauthorized'], 401);
         }
+
+        // If authentication fails
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
 
     public function logout(Request $request)

@@ -6,6 +6,7 @@ import { ItemService } from 'src/app/services/item.service';
 import { Item } from 'src/app/model/item.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
+import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
 	selector: 'app-navbar',
@@ -19,6 +20,7 @@ export class NavbarComponent implements OnInit {
 	items: Item[] = [];
 
 	currentUser: any = null;
+	userRole: any = null;
 	fullName: any = "";
 
 	constructor(
@@ -26,10 +28,12 @@ export class NavbarComponent implements OnInit {
 		private router: Router,
 		private itemService: ItemService,
 		private authService: AuthService,
-		private userService: UserService
+		private userService: UserService,
+		private customerService: CustomerService
 	) {
 		this.location = location;
 		this.currentUser = localStorage.getItem('currentUser');
+		this.userRole = localStorage.getItem('userRole');
 	}
 
 	ngOnInit() {
@@ -74,10 +78,18 @@ export class NavbarComponent implements OnInit {
 	}
 
 	getCurrentLoggedInUser() {
-		this.userService.getUserById(this.currentUser).subscribe(
-			user => {
-				this.fullName = user['data'].first_name + " " + user['data'].last_name;
-			}
-		);
+		if(this.userRole !== 'customer') {
+			this.userService.getUserById(this.currentUser).subscribe(
+				user => {
+					this.fullName = user['data'].first_name + " " + user['data'].last_name;
+				}
+			);
+		} else {
+			this.customerService.getCustomerById(this.currentUser).subscribe(
+				user => {
+					this.fullName = user['data'].first_name + " " + user['data'].last_name;
+				}
+			);
+		}
 	}
 }

@@ -18,14 +18,15 @@ export class LoginComponent {
     }
 
     login() {
-		console.log(this.credentials);
-        this.authService.login(this.credentials).subscribe(
-            () => {
+        this.authService.login(this.credentials).subscribe((res) => {
+            if(res.role !== 'customer') {
                 this.router.navigate(['admin/dashboard']);
-            },
-            error => {
-                alert("Invalid Credentials");
+            } else {
+                this.router.navigate(['customer/mine']);
             }
-        );
+        },
+        error => {
+            alert("Invalid Credentials");
+        });
     }
 }

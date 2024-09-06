@@ -20,7 +20,7 @@ export const ADMIN_ROUTES: RouteInfo[] = [
 ];
 
 export const CUSTOMER_ROUTES: RouteInfo[] = [
-	{ path: 'purchases', title: 'Purchases', icon: 'ni-cart text-orange', class: '' },
+	// { path: 'purchases', title: 'Purchases', icon: 'ni-cart text-orange', class: '' },
 ];
 
 @Component({

@@ -11,10 +11,13 @@
 <div class="container-fluid mt--7">
     <div class="row">
         <div class="col">
+            <div class="card-header" *ngIf="itemOnSale.item_code">
+                <h2 class="mb-0"> {{ itemOnSale.description }}</h2>
+            </div>
             <div class="card-body">
                 <div class="col-12 d-flex justify-content-center">
                     <!-- Applying custom-size class -->
-                    <button type="button" class="btn btn-warning custom-size mb-0 ms-auto">MINE</button>
+                    <button type="button" class="btn btn-warning custom-size mb-0 ms-auto" (click)="customerMine(itemOnSale.item_code)" [disabled]="!itemOnSale.item_code">MINE</button>
                 </div>
             </div>
         </div>

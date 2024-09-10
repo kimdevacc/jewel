@@ -22,7 +22,7 @@ export class LoginComponent {
             if(res.role !== 'customer') {
                 this.router.navigate(['admin/dashboard']);
             } else {
-                this.router.navigate(['customer/mine']);
+                this.router.navigate(['customer/purchase/mine']);
             }
         },
         error => {

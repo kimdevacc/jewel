@@ -19,7 +19,7 @@ export class ItemService {
     }
 
     getItems(): Observable<Item[]> {
-        return this.http.get<Item[]>(`${this.apiUrl}/items`, { headers: this.authHeaders }).pipe(
+        return this.http.get<Item[]>(`${this.apiUrl}/items/all`, { headers: this.authHeaders }).pipe(
             catchError(error => {
                 console.error('Error fetching items:', error);
                 return of([]);

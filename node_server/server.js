@@ -22,6 +22,13 @@ wss.on('connection', (ws) => {
                 }
             });
         }
+        if (data.event === 'next-item') {
+            wss.clients.forEach((client) => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify({ event: 'customer-next-item', message: data.message }));
+                }
+            });
+        }
     });
 
     ws.on('close', () => {

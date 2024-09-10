@@ -10,6 +10,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\URLController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LiveSellingTrxController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -52,7 +54,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::patch('/categories/{id}', [CategoryController::class, 'update']);
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
-    Route::get('/items', [ItemController::class, 'index']);
+    Route::get('/items/all', [ItemController::class, 'index']);
     Route::post('/items', [ItemController::class, 'store']);
     Route::get('/items', [ItemController::class, 'show_by_category']);
     Route::get('/items/{category}', [ItemController::class, 'get_items_by_category']);
@@ -72,4 +74,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Route::get('/purchases/{id}', [PurchaseController::class, 'show']);
     // Route::patch('/purchases/{id}', [PurchaseController::class, 'update']);
     // Route::delete('/purchases/{id}', [PurchaseController::class, 'destroy']);
+
+    Route::post('/mine', [LiveSellingTrxController::class, 'store']);
 });

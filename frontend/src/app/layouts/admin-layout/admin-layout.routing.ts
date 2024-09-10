@@ -13,12 +13,14 @@ import { ItemCategoryComponent } from 'src/app/pages/items/list-category/item-ca
 import { ItemsComponent } from 'src/app/pages/items/items/items.component';
 import { UserProfileComponent } from 'src/app/pages/user-profile/user-profile.component';
 import { LiveSellingComponent } from 'src/app/pages/live-selling/live-selling.component';
+import { MinerListComponent } from 'src/app/pages/live-selling/miner-list/miner-list.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
     { path: 'purchase', component: PurchaseComponent },
     { path: 'category', component: CategoryComponent },
     { path: 'live-selling', component: LiveSellingComponent },
+    { path: 'live-selling/miner-list', component: MinerListComponent },
     { path: 'category/form/:id', component: CategoryFormComponent },
     { path: 'item-by-category', component: ItemCategoryComponent },
     { path: 'items/list/:category', component: ItemsComponent },

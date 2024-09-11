@@ -12,7 +12,7 @@ export const ADMIN_ROUTES: RouteInfo[] = [
 	// { path: '/icons', title: 'Items', icon: 'ni-planet text-blue', class: '' },
 	// { path: '/maps', title: 'Maps', icon: 'ni-pin-3 text-orange', class: '' },
 	{ path: 'live-selling', title: 'Live Selling', icon: 'ni-cart text-orange', class: '' },
-	// { path: 'purchase', title: 'Purchases', icon: 'ni-cart text-orange', class: '' },
+	{ path: 'purchase', title: 'Purchases', icon: 'ni-cart text-orange', class: '' },
 	{ path: 'item-by-category', title: 'Items', icon: 'ni-bullet-list-67 text-red', class: '' },
 	{ path: 'category', title: 'Category', icon: 'ni-pin-3 text-yellow', class: '' },
 	{ path: 'customer', title: 'Customer', icon: 'ni-single-02 text-blue', class: '' },
@@ -22,7 +22,7 @@ export const ADMIN_ROUTES: RouteInfo[] = [
 
 export const CUSTOMER_ROUTES: RouteInfo[] = [
 	{ path: 'purchase/mine', title: 'Live Selling', icon: 'ni-single-02 text-blue', class: '' },
-	{ path: 'my-purchases', title: 'Purchase', icon: 'ni-cart text-orange', class: '' }
+	{ path: 'my-purchases', title: 'My Purchase', icon: 'ni-cart text-orange', class: '' }
 ];
 
 @Component({

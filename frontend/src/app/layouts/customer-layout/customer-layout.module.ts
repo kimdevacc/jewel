@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerLayoutRoutes } from './customer-layout.routing';
 import { PurchaseConfirmComponent } from 'src/app/pages/purchase/confirm/purchase-confirm.component';
 import { MineFunctionComponent } from 'src/app/pages/purchase/mine-function/mine-function.component';
+import { PasswordEntryComponent } from 'src/app/pages/live-selling/password-entry/password-entry.component';
 
 @NgModule({
 	imports: [
@@ -21,7 +22,8 @@ import { MineFunctionComponent } from 'src/app/pages/purchase/mine-function/mine
 	],
 	declarations: [
 		PurchaseConfirmComponent,
-		MineFunctionComponent
+		MineFunctionComponent,
+		PasswordEntryComponent
 	]
 })
 

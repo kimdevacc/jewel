@@ -75,4 +75,14 @@ class ItemController extends Controller
 
         return ItemResource::collection($items);
     }
+
+    public function get_item_by_item_code(Request $request)
+    {
+        $item = Item::where('item_code', $request->item_code)->first();
+
+        if (!$item) {
+            return response()->json(['message' => 'Item not found'], 404);
+        }
+        return new ItemResource($item);
+    }
 }

@@ -74,7 +74,11 @@ export class NavbarComponent implements OnInit {
     }
 
 	navigateToProfile() {
-		this.router.navigate(['admin/profile/form', this.currentUser]);
+		if(this.userRole !== 'customer') {
+			this.router.navigate(['admin/profile/form', this.currentUser]);
+		} else {
+			this.router.navigate(['customer/profile/form', this.currentUser]);
+		}
 	}
 
 	getCurrentLoggedInUser() {

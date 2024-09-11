@@ -32,7 +32,7 @@ export class PurchaseService {
         );
     }
 
-    addPurchase(purchase: Purchase): Observable<Purchase> {
+    addPurchase(purchase: any): Observable<Purchase> {
         return this.http.post<Purchase>(this.apiUrl, purchase).pipe(
             tap((response) => {
                 console.log('Purchase added successfully:', response);
@@ -66,6 +66,15 @@ export class PurchaseService {
             catchError(error => {
                 console.error(`Error deleting purchase with id=${id}:`, error);
                 throw error;
+            })
+        );
+    }
+
+    myPurchases(email: string): Observable<any> {
+        return this.http.post<any[]>(`http://localhost:8000/api/my-purchases`, { email }).pipe(
+            catchError((error: any) => {
+                console.error('Error fetching trx:', error);
+                return of([]);
             })
         );
     }

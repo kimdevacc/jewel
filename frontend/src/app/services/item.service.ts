@@ -101,4 +101,16 @@ export class ItemService {
             })
         );
     }
+
+    getItemByItemCode(item_code: any): Observable<Item> {
+        return this.http.get<Item>(`${this.apiUrl}/get_item_by_item_code/${item_code}`, { headers: this.authHeaders }).pipe(
+            tap((response) => {
+                return response;
+            }),
+            catchError(error => {
+                console.error('Error fetching item:', error);
+                return of();
+            })
+        );
+    }
 }

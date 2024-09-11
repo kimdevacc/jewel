@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Item } from 'src/app/model/item.model';
-import { ItemService } from 'src/app/services/item.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EmailDataService } from 'src/app/services/email-data.service';
+import { TrxService } from 'src/app/services/trx.service';
 
 @Component({
 	selector: 'app-miner-list',
@@ -10,36 +10,42 @@ import { ItemService } from 'src/app/services/item.service';
 })
 export class MinerListComponent implements OnInit {
 
-	routerId: string;
-	items: Item[] = [];
+	code: string;
+	minerList: any[] = [];
 
 	socket = new WebSocket('ws://localhost:3000');
-	
+
 
 	constructor(
 		private route: ActivatedRoute,
-		private itemService: ItemService
-	) { 
+		private trxService: TrxService,
+		private router: Router,
+		private emailDataService: EmailDataService
+	) {
 		this.route.params.subscribe(params => {
-            this.routerId = params['id'];
-        });
+			this.code = params['code'];
+		});
 	}
 
 	ngOnInit() {
-		this.itemService.getItems().subscribe(response => {
-            this.items = response['data'];
-        });
+		this.trxService.getTrxsByItemCode(this.code).subscribe(
+			response => {
+				this.minerList = response || [];
+			},
+			error => {
+				console.error('Error fetching data', error);
+				this.minerList = [];
+			}
+		);
 	}
 
-	nextItem(value: any) {
-		let newVal = {
-			item_code: value?.item_code,
-			description: `${value?.item_code} - ${value?.item_name}`
+	
+    generateQrCode(item: any) {
+		let credentials = {
+			email: item.ordered_by,
+			password: item.password
 		}
-		this.socket.send(JSON.stringify({ event: "next-item", message: newVal }));
-	}
-
-	generateQrFirstMiner(value: any) {
-		
-	}
+		this.emailDataService.setCredentials(credentials);
+		this.router.navigate([`admin/live-selling/miner-list/${this.code}/qr/${item.id}`]);
+    }
 }

@@ -13,6 +13,7 @@ export class AuthService {
     private authTokenKey = 'authToken';
     private userRoleKey = 'userRole';
     private currentUser = 'currentUser';
+    private currentUserEmail = 'currentUserEmail';
 
     constructor(private http: HttpClient) { }
 
@@ -24,6 +25,7 @@ export class AuthService {
                     if (response.role) {
                         localStorage.setItem(this.userRoleKey, response.role);
                         localStorage.setItem(this.currentUser, response.currentUser);
+                        localStorage.setItem(this.currentUserEmail, response.email)
                     }
                 }
             })

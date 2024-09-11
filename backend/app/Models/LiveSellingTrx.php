@@ -12,6 +12,7 @@ class LiveSellingTrx extends Model
 
     protected $fillable = [
         'item_code',
-        'ordered_by'
+        'ordered_by',
+        'status'
     ];
 }

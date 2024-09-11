@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Item } from 'src/app/model/item.model';
 import { ItemService } from 'src/app/services/item.service';
 
@@ -18,7 +18,8 @@ export class LiveSellingComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private itemService: ItemService
+		private itemService: ItemService,
+		private router: Router
 	) { 
 		this.route.params.subscribe(params => {
             this.routerId = params['id'];
@@ -39,7 +40,7 @@ export class LiveSellingComponent implements OnInit {
 		this.socket.send(JSON.stringify({ event: "next-item", message: newVal }));
 	}
 
-	generateQrFirstMiner(value: any) {
-		
+	minerList(value: any) {
+		this.router.navigate(['admin/live-selling/miner-list', value]);
 	}
 }

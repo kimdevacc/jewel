@@ -37,7 +37,8 @@ export class MineFunctionComponent implements OnInit {
 
     customerMine(value: any) {
         const newVal = {
-            val: value
+            val: value,
+            status: 'Mine'
         }
         this.trxService.saveTrx(newVal).subscribe(
             (response) => {

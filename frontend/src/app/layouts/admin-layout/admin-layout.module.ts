@@ -23,6 +23,7 @@ import { ItemsComponent } from 'src/app/pages/items/items/items.component';
 import { UserProfileComponent } from 'src/app/pages/user-profile/user-profile.component';
 import { LiveSellingComponent } from 'src/app/pages/live-selling/live-selling.component';
 import { MinerListComponent } from 'src/app/pages/live-selling/miner-list/miner-list.component';
+import { TrxQrFormComponent } from 'src/app/pages/live-selling/qr/trx-qr-form.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -49,7 +50,8 @@ import { MinerListComponent } from 'src/app/pages/live-selling/miner-list/miner-
 		PurchaseComponent,
 		UserProfileComponent,
 		LiveSellingComponent,
-		MinerListComponent
+		MinerListComponent,
+		TrxQrFormComponent
 	]
 })
 

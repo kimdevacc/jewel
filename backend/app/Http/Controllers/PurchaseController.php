@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Purchase;
 use App\Models\Item;
+use App\Models\LiveSellingTrx;
 use App\Http\Resources\PurchaseResource;
 
 class PurchaseController extends Controller
@@ -22,6 +23,10 @@ class PurchaseController extends Controller
             $item['qty'] = $item['qty'] - $request->qty;
             $item->update([$item['qty']]);
             $purchase = Purchase::create($request->all());
+            $trx = LiveSellingTrx::findOrFail($request->trxId);
+            $trx->update([
+                'status' => 'Done'
+            ]);
             return new PurchaseResource($purchase);
         } else {
             return response()->json(['message' => 'Item Out of Stock'], 200);
@@ -58,5 +63,14 @@ class PurchaseController extends Controller
 
         $purchase->delete();
         return response()->json(['message' => 'Purchase deleted successfully'], 200);
+    }
+
+    public function get_purchase_by_email(Request $request)
+    {
+        $purchases = Purchase::where('ordered_by', $request->email)->get();
+        if (!$purchases) {
+            return response()->json(['message' => 'Purchase not found'], 404);
+        }
+        return PurchaseResource::collection($purchases);
     }
 }

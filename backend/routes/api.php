@@ -37,6 +37,11 @@ Route::post('/purchases', [PurchaseController::class, 'store']);
 Route::get('/purchases/{id}', [PurchaseController::class, 'show']);
 Route::patch('/purchases/{id}', [PurchaseController::class, 'update']);
 Route::delete('/purchases/{id}', [PurchaseController::class, 'destroy']);
+Route::post('/my-purchases', [PurchaseController::class, 'get_purchase_by_email']);
+
+Route::post('/verify_credentials', [LiveSellingTrxController::class, 'verify_credentials']);
+Route::get('/live_selling_trx/{id}', [LiveSellingTrxController::class, 'live_selling_trx']);
+Route::get('/get_item_by_item_code/{item_code}', [ItemController::class, 'get_item_by_item_code']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -76,4 +81,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Route::delete('/purchases/{id}', [PurchaseController::class, 'destroy']);
 
     Route::post('/mine', [LiveSellingTrxController::class, 'store']);
+    Route::get('/miner-list/{item_code}', [LiveSellingTrxController::class, 'transaction_by_item']);
 });

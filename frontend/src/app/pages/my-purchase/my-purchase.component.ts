@@ -38,7 +38,7 @@ export class MyPurchaseComponent implements OnInit {
 				}
 			);
 		} else {
-			this.isLoading = false;
+			this.isLoading = false;	
 		}
 	}
 }

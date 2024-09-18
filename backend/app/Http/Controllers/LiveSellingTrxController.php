@@ -22,11 +22,11 @@ class LiveSellingTrxController extends Controller
     }
 
     public function transaction_by_item(Request $request) {
-        $trxs = LiveSellingTrx::select('live_selling_trx.item_code', 'live_selling_trx.ordered_by', 'customers.first_name', 'customers.last_name', 'customers.password', \DB::raw('MAX(live_selling_trx.created_at) as latest_created_at'))
+        $trxs = LiveSellingTrx::select('live_selling_trx.id', 'live_selling_trx.item_code', 'live_selling_trx.ordered_by', 'customers.first_name', 'customers.last_name', 'customers.password', \DB::raw('MAX(live_selling_trx.created_at) as latest_created_at'))
             ->leftJoin('customers', 'live_selling_trx.ordered_by', '=', 'customers.email')
             ->where('live_selling_trx.item_code', $request->item_code)
             ->where('status', '!=', 'Close')
-            ->groupBy('live_selling_trx.item_code', 'live_selling_trx.ordered_by', 'customers.first_name', 'customers.last_name', 'customers.password')
+            ->groupBy('live_selling_trx.id', 'live_selling_trx.item_code', 'live_selling_trx.ordered_by', 'customers.first_name', 'customers.last_name', 'customers.password')
             ->orderBy('latest_created_at', 'desc')
             ->get();
     

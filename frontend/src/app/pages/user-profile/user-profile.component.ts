@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 export class UserProfileComponent implements OnInit {
 
 	routerId: string;
-	user_profile: User = { id: null, first_name: '', last_name: '', email: '', contact_number: '', password: ''};
+	user_profile: User = { id: null, first_name: '', last_name: '', email: '', contact_number: '', password: '', address: '', zipcode: ''};
 	
 	editProfile: boolean = false;
 

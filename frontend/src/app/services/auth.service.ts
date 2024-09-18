@@ -13,7 +13,7 @@ export class AuthService {
     private authTokenKey = 'authToken';
     private userRoleKey = 'userRole';
     private currentUser = 'currentUser';
-    private currentUserEmail = 'currentUserEmail';
+    private currentUserEmailKey = 'currentUserEmail';
 
     constructor(private http: HttpClient) { }
 
@@ -25,7 +25,7 @@ export class AuthService {
                     if (response.role) {
                         localStorage.setItem(this.userRoleKey, response.role);
                         localStorage.setItem(this.currentUser, response.currentUser);
-                        localStorage.setItem(this.currentUserEmail, response.email)
+                        localStorage.setItem(this.currentUserEmailKey, response.email)
                     }
                 }
             })
@@ -43,6 +43,7 @@ export class AuthService {
             tap(() => {
                 localStorage.removeItem(this.authTokenKey);
                 localStorage.removeItem(this.userRoleKey); 
+                localStorage.removeItem(this.currentUserEmailKey); 
             }),
             catchError((error) => {
                 // Handle logout error

@@ -4,13 +4,13 @@ import { CategoryService } from 'src/app/services/category.service';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-category',
-    templateUrl: './category.component.html',
-    styleUrls: ['./category.component.scss']
+    selector: 'app-sub-category',
+    templateUrl: './sub-category.component.html',
+    styleUrls: ['./sub-category.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class SubCategoryComponent implements OnInit {
     
-    categories: any[] = [];
+    sub_categories: any[] = [];
 
     constructor(private categoryService: CategoryService, private router: Router) { }
 
@@ -20,10 +20,10 @@ export class CategoryComponent implements OnInit {
 
     loadCategories() {
         this.categoryService.getCategories().subscribe(response => {
-            this.categories = response['data'];
+            this.sub_categories = response['data'];
             const items = response['data'];
             let categories = items.reduce((acc, item) => {
-                const category = item.category_name;
+                const category = item.sizes;
 
                 if (!acc[category]) {
                     acc[category] = [];
@@ -32,7 +32,7 @@ export class CategoryComponent implements OnInit {
                 return acc;
             }, {});
 
-            this.categories = Object.keys(categories).map(key => ({
+            this.sub_categories = Object.keys(categories).map(key => ({
                 category_name: key,
                 items: categories[key]
             }));
@@ -43,7 +43,7 @@ export class CategoryComponent implements OnInit {
         if (confirm('Are you sure you want to delete this category?')) {
             this.categoryService.deleteCategory(id).subscribe(
                 () => {
-                    this.categories = this.categories.filter(category => category.id !== id);
+                    this.sub_categories = this.sub_categories.filter(category => category.id !== id);
                 },
                 (error) => {
                     console.error('Error deleting category:', error);
@@ -57,6 +57,6 @@ export class CategoryComponent implements OnInit {
     }
     
     viewCategory(id: string) {
-        this.router.navigate(['admin/category/sub-category']);
+        this.router.navigate(['admin/category/form', id]);
     }    
 }

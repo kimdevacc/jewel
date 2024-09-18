@@ -15,6 +15,7 @@ class CreateItemsTable extends Migration
             $table->text('item_description')->nullable();
             $table->string('category')->nullable();
             $table->integer('qty')->default(0);
+            $table->string('sizes')->nullable();
             $table->integer('price')->default(0);
             $table->timestamps();
             $table->softDeletes();

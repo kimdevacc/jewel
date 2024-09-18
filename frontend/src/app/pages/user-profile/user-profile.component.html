@@ -55,23 +55,28 @@
 						<h6 class="heading-small text-muted mb-4">Contact information</h6>
 						<div class="pl-lg-4">
 							<div class="row">
-								<div class="col-md-12">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label for="contact_number">Contact Number</label>
 										<input type="text" class="form-control" id="contact_number" [(ngModel)]="user_profile.contact_number" name="contact_number" [disabled]="!editProfile">
 									</div>
 								</div>
-							</div>
-							<!-- <div class="row">
-								<div class="col-md-12">
+								<div class="col-md-6">
 									<div class="form-group">
 										<label class="form-control-label" for="input-address">Address</label>
 										<input id="input-address" class="form-control form-control-alternative"
-											placeholder="Home Address"
-											value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text">
+											placeholder="Home Address" type="text"[(ngModel)]="user_profile.address"  [disabled]="!editProfile">
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label class="form-control-label" for="input-city">Zip Code</label>
+										<input type="text" id="input-city" class="form-control form-control-alternative"
+											placeholder="City" [(ngModel)]="user_profile.zipcode" [disabled]="!editProfile">
 									</div>
 								</div>
 							</div>
+							<!-- 
 							<div class="row">
 								<div class="col-lg-4">
 									<div class="form-group">
@@ -105,12 +110,6 @@
 									<div class="form-group">
 										<label for="password">Password</label>
 										<input type="password" class="form-control" id="password" [(ngModel)]="user_profile.password" name="password" [disabled]="!editProfile">
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="confirm_password">Password</label>
-										<input type="password" class="form-control" id="confirm_password" [(ngModel)]="user_profile.password" name="confirm_password" [disabled]="!editProfile">
 									</div>
 								</div>
 							</div>

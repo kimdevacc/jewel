@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from 'src/app/model/item.model';
 import { Purchase } from 'src/app/model/purchase.model';
 import { EmailDataService } from 'src/app/services/email-data.service';
@@ -16,8 +16,9 @@ export class PurchaseConfirmComponent implements OnInit {
     url = window.location.href;
 	currentURL: string = '';
     item: Item = { id: null, item_name: '', item_description: '', category: '', qty: null, item_code: '', price: 0 };
-    credentials:  { email: string | null, password: string | null } = null;
-
+    email: string = "";
+    password: string = "";
+    userEmail = localStorage.getItem('currentUserEmail');
     TotalAmount: number = 0;
 
     constructor(
@@ -25,17 +26,17 @@ export class PurchaseConfirmComponent implements OnInit {
         private itemService: ItemService,
         private purchaseService: PurchaseService,
         private trxService: TrxService,
-        private emailDataService: EmailDataService
+        private router: Router
     ) {
         this.route.params.subscribe(params => {
             this.routerId = params['id'];
+            this.email = params['email'];
+            this.password = params['token'];
         });
-        this.credentials = this.emailDataService.getCredentials();
-        console.log(this.credentials);
     }
 
     ngOnInit() {
-        if(this.credentials.email && this.credentials.password) {
+        if(decodeURIComponent(this.email) === this.userEmail) {
             if(this.routerId) {
                 this.trxService.getTrx(this.routerId).subscribe(res => {
                     const trx = res['data'];
@@ -54,6 +55,7 @@ export class PurchaseConfirmComponent implements OnInit {
                 });
             }
         } else {
+            alert("Current Login User is not the one who purchased the item");
             window.close();
         }
     }
@@ -63,13 +65,13 @@ export class PurchaseConfirmComponent implements OnInit {
     }
 
     addToOrder() {
-        let purchase: any = { id: 0, item_code: this.item.item_code, ordered_by: this.credentials.email, qty: 1, status: 'New', total_amount: this.TotalAmount, trxId: this.routerId };
+        let purchase: any = { id: 0, item_code: this.item.item_code, ordered_by: decodeURIComponent(this.email), qty: 1, status: 'New', total_amount: this.TotalAmount, trxId: this.routerId };
         this.purchaseService.addPurchase(purchase).subscribe(
             (response) => {
                 if(response['message'] === 'Item Out of Stock') {
                     alert(response['message']);
                 } else {
-                    window.close();
+                    this.router.navigate([`customer/purchase/receipt/${response['data']['id']}`]);
                 }
             },
             (error) => {

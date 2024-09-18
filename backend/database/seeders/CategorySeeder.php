@@ -14,9 +14,35 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
+        $categories = [
+            'Shirts',
+            'T-Shirts',
+            'Polos',
+            'Outerwear',
+            'Jeans',
+            'Pants',
+            'Shorts',
+            'Underwear & Loungewear',
+            'Swimwear',
+            'Socks'
+        ];
 
-        \App\Models\Category::create(['category_name' => 'Food']);
-        \App\Models\Category::create(['category_name' => 'Health and Wellness']);
-        \App\Models\Category::create(['category_name' => 'Pandemic Essential Products']);
+        $sizes = [
+            'Extra Small (XS)',
+            'Small (S)',
+            'Medium (M)',
+            'Large (L)',
+            'Extra Large (XL)',
+            'Double Extra Large (XXL)'
+        ];
+
+        foreach($categories as $cat) {
+            foreach($sizes as $size) {
+                \App\Models\Category::create([
+                    'category_name' => $cat,
+                    'sizes' => $size
+                ]);
+            }
+        }
     }
 }

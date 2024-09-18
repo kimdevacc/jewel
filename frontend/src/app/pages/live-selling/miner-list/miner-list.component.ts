@@ -41,11 +41,6 @@ export class MinerListComponent implements OnInit {
 
 	
     generateQrCode(item: any) {
-		let credentials = {
-			email: item.ordered_by,
-			password: item.password
-		}
-		this.emailDataService.setCredentials(credentials);
-		this.router.navigate([`admin/live-selling/miner-list/${this.code}/qr/${item.id}`]);
+		this.router.navigate([`admin/live-selling/miner-list/${this.code}/qr/${item.id}/${encodeURIComponent(item.ordered_by)}/${encodeURIComponent(item.password)}`]);
     }
 }

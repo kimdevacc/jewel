@@ -11,7 +11,14 @@ import { CategoryService } from 'src/app/services/category.service';
 export class CategoryFormComponent implements OnInit {
     category: Category = { id: null, category_name: '', supplier_name: '', sizes: '' };
 
-    sizesList: any[] = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'];
+    sizesList: any[] = [
+        'Extra Small (XS)',
+        'Small (S)',
+        'Medium (M)',
+        'Large (L)',
+        'Extra Large (XL)',
+        'Double Extra Large (XXL)'
+    ];
 
     routerId: string;
 

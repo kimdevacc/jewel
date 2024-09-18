@@ -10,6 +10,7 @@ import { CustomerLayoutRoutes } from './customer-layout.routing';
 import { PurchaseConfirmComponent } from 'src/app/pages/purchase/confirm/purchase-confirm.component';
 import { MineFunctionComponent } from 'src/app/pages/purchase/mine-function/mine-function.component';
 import { PasswordEntryComponent } from 'src/app/pages/live-selling/password-entry/password-entry.component';
+import { ReceiptComponent } from 'src/app/pages/purchase/receipt/receipt.component';
 
 @NgModule({
 	imports: [
@@ -23,7 +24,8 @@ import { PasswordEntryComponent } from 'src/app/pages/live-selling/password-entr
 	declarations: [
 		PurchaseConfirmComponent,
 		MineFunctionComponent,
-		PasswordEntryComponent
+		PasswordEntryComponent,
+		ReceiptComponent
 	]
 })
 

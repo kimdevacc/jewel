@@ -12,8 +12,9 @@ export class TrxQrFormComponent implements OnInit {
     @ViewChild('qrCodeCanvas') qrCodeCanvas!: ElementRef;
     code: string;
     currentURL: string = '';
-    credentials:  { email: string | null, password: string | null };
     id: string = '';
+    email: string = "";
+    password: string = "";
 
     constructor(
         private router: Router,
@@ -23,12 +24,13 @@ export class TrxQrFormComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.code = params['code'];
             this.id = params['id'];
+            this.email = params['email'];
+            this.password = params['token'];
         });
-        this.credentials = this.emailDataService.getCredentials();
     }
 
     ngOnInit() {
-        const buildUrl = `http://192.168.1.17:4200/#/customer/purchase/confirm/${this.id}?email=${encodeURIComponent(this.credentials.email)}&token=${encodeURIComponent(this.credentials.password)}`;
+        const buildUrl = `http://192.168.1.17:4200/#/customer/purchase/confirm/${this.id}/${encodeURIComponent(this.email)}/${encodeURIComponent(this.password)}`;
         const currentURL = encodeURIComponent(buildUrl);
         this.currentURL = `http:/192.168.1.17:8000/api/open-in-desktop?url=${currentURL}`;
     }

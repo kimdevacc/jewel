@@ -29,6 +29,8 @@
 												<th scope="col">Item Code</th>
 												<th scope="col">Item Name</th>
 												<th scope="col">Item Description</th>
+												<th scope="col">Category</th>
+												<th scope="col">Sizes</th>
 												<th scope="col"></th>
 											</tr>
 										</thead>
@@ -37,6 +39,8 @@
 												<td>{{ item.item_code }}</td>
 												<td>{{ item.item_name }}</td>
 												<td>{{ item.item_description }}</td>
+												<td>{{ item.category }}</td>
+												<td>{{ item.sizes }}</td>
 												<td class="text-right">
 													<div ngbDropdown placement="bottom-right">
 														<a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
@@ -50,7 +54,7 @@
 												</td>
 											</tr>
 											<tr *ngIf="items.length === 0">
-												<td colspan="5">NO DATA</td>
+												<td colspan="6">NO DATA</td>
 											</tr>
 										</tbody>
 									</table>

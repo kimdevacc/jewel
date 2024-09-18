@@ -15,14 +15,16 @@ import { UserProfileComponent } from 'src/app/pages/user-profile/user-profile.co
 import { LiveSellingComponent } from 'src/app/pages/live-selling/live-selling.component';
 import { MinerListComponent } from 'src/app/pages/live-selling/miner-list/miner-list.component';
 import { TrxQrFormComponent } from 'src/app/pages/live-selling/qr/trx-qr-form.component';
+import { SubCategoryComponent } from 'src/app/pages/category/sub-list/sub-category.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
     { path: 'purchase', component: PurchaseComponent },
     { path: 'category', component: CategoryComponent },
+    { path: 'category/sub-category', component: SubCategoryComponent },
     { path: 'live-selling', component: LiveSellingComponent },
     { path: 'live-selling/miner-list/:code', component: MinerListComponent },
-    { path: 'live-selling/miner-list/:code/qr/:id', component: TrxQrFormComponent },
+    { path: 'live-selling/miner-list/:code/qr/:id/:email/:token', component: TrxQrFormComponent },
     { path: 'category/form/:id', component: CategoryFormComponent },
     { path: 'item-by-category', component: ItemCategoryComponent },
     { path: 'items/list/:category', component: ItemsComponent },

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from './services/auth.service';
+import { WebsocketService } from './services/websocket.service';
 
 @Component({
 	selector: 'app-root',
@@ -8,23 +10,26 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
 
 	userRole = localStorage.getItem('userRole');
+	currentUser = localStorage.getItem('currentUser');
+	isAdminLoggedIn: boolean = false;
+	isCustomerLoggedIn: boolean = false;
 
-	constructor() { }
+	constructor(
+		public authService: AuthService,
+		private websocketService: WebsocketService
+	) { }
 
 	ngOnInit(): void {
-		// if(this.userRole === 'admin') {
-			const socket = new WebSocket('ws://localhost:3000');
-			socket.onopen = () => {
-				console.log('Connected to WebSocket server');
-			};
+		this.authService.isLoggedIn().subscribe(res => {
+			if (this.userRole === "customer") {
+				this.isCustomerLoggedIn = res;
+			}
+		});
 
-			socket.onmessage = (event) => {
-				let obj = JSON.parse(event.data);
-				console.log('Received message from server:', obj);
-				if(obj?.event === "open-in-desktop") {
-					window.open(obj?.message, '_blank');
-				}
-			};
-		// }
+		this.websocketService.messages.subscribe(message => {
+			if (message?.event === "open-in-desktop") {
+				window.open(message?.message, '_blank');
+			}
+		});
 	}
 }

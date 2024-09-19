@@ -25,6 +25,7 @@ import { LiveSellingComponent } from 'src/app/pages/live-selling/live-selling.co
 import { MinerListComponent } from 'src/app/pages/live-selling/miner-list/miner-list.component';
 import { TrxQrFormComponent } from 'src/app/pages/live-selling/qr/trx-qr-form.component';
 import { SubCategoryComponent } from 'src/app/pages/category/sub-list/sub-category.component';
+import { ChatComponent } from 'src/app/pages/chat/chat.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -53,7 +54,8 @@ import { SubCategoryComponent } from 'src/app/pages/category/sub-list/sub-catego
 		UserProfileComponent,
 		LiveSellingComponent,
 		MinerListComponent,
-		TrxQrFormComponent
+		TrxQrFormComponent,
+		ChatComponent
 	]
 })
 

@@ -1,0 +1,58 @@
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="mb-0 text-white">Chat Customer</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--7">
+    <div class="row">
+        <div class="col-4">
+            <div class="card shadow">
+                <input type="text" class="form-control mb-2" placeholder="Search" [(ngModel)]="searchQuery" (input)="search()">
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <tbody>
+                            <tr *ngFor="let customer of paginatedCustomer">
+                                <td>{{ customer.first_name }} {{ customer.last_name }}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" (click)="openChatHistory(customer)">Chat</button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="paginatedCustomer.length === 0">
+                                <td>NO Customer</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination d-flex justify-content-end">
+                    <button class="btn btn-primary btn-sm" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">Previous</button>
+                    <ng-container *ngFor="let page of visiblePages()">
+                        <button class="btn btn-primary btn-sm" [class.active]="currentPage === page" (click)="goToPage(page)">{{ page }}</button>
+                    </ng-container>
+                    <button class="btn btn-primary btn-sm" [disabled]="currentPage === totalPages()" (click)="goToPage(currentPage + 1)">Next</button>
+                </div>	
+            </div>
+        </div>
+
+        <div class="col-6" *ngIf="customerId != 0">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="chat-messages" style="max-height: 550px; overflow-y: auto; background-color: white; padding: 10px; border-radius: 5px; min-height: 550px;">
+                        <strong>{{ customerName }}</strong>
+                        <div class="message-container" *ngFor="let msg of messagesHistory" [ngClass]="msg.sender_id === currentUser ? 'customer-message' : 'owner-message'">
+                            <div class="message-content">{{ msg.content }}</div>
+                        </div>
+                    </div>
+                    <div style="display: grid;">
+                        <input [(ngModel)]="customerMessage" class="form-control mb-2" (keypress)="($event.key === 'Enter') ? sendCustomerMessage() : null" placeholder="Type a message..." />
+                        <button class="btn btn-primary btn-sm" (click)="sendCustomerMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

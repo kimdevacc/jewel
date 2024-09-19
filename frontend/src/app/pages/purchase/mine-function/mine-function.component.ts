@@ -28,7 +28,6 @@ export class MineFunctionComponent implements OnInit {
 
         socket.onmessage = (event) => {
             let obj = JSON.parse(event.data);
-            console.log('Received message from server:', obj);
             if(obj?.event === "customer-next-item") {
                 this.itemOnSale = obj?.message;
             }

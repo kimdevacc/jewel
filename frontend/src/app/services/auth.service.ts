@@ -12,7 +12,7 @@ export class AuthService {
     apiUrl = 'http://localhost:8000/api';
     private authTokenKey = 'authToken';
     private userRoleKey = 'userRole';
-    private currentUser = 'currentUser';
+    private currentUserKey = 'currentUser';
     private currentUserEmailKey = 'currentUserEmail';
 
     constructor(private http: HttpClient) { }
@@ -24,7 +24,7 @@ export class AuthService {
                     localStorage.setItem(this.authTokenKey, response.token);
                     if (response.role) {
                         localStorage.setItem(this.userRoleKey, response.role);
-                        localStorage.setItem(this.currentUser, response.currentUser);
+                        localStorage.setItem(this.currentUserKey, response.currentUser);
                         localStorage.setItem(this.currentUserEmailKey, response.email)
                     }
                 }
@@ -43,6 +43,7 @@ export class AuthService {
             tap(() => {
                 localStorage.removeItem(this.authTokenKey);
                 localStorage.removeItem(this.userRoleKey); 
+                localStorage.removeItem(this.currentUserKey); 
                 localStorage.removeItem(this.currentUserEmailKey); 
             }),
             catchError((error) => {
@@ -55,7 +56,7 @@ export class AuthService {
 
     isLoggedIn(): Observable<boolean> {
         const authToken = localStorage.getItem(this.authTokenKey);
-        return authToken ? of(true) : of(false);
+        return authToken != null ? of(true) : of(false);
     }
 
     getUserRole(): Observable<string | null> {

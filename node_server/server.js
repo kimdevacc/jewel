@@ -14,6 +14,8 @@ wss.on('connection', (ws) => {
 
     ws.on('message', (message) => {
         const data = JSON.parse(message);
+        console.log('Received message:', data);  // Log received messages for debugging
+
         if (data.event === 'open-in-desktop') {
             console.log(data);
             wss.clients.forEach((client) => {
@@ -26,6 +28,14 @@ wss.on('connection', (ws) => {
             wss.clients.forEach((client) => {
                 if (client.readyState === WebSocket.OPEN) {
                     client.send(JSON.stringify({ event: 'customer-next-item', message: data.message }));
+                }
+            });
+        }
+        if (data.event === 'chat-message') {
+            const chatMessage = JSON.stringify({ event: 'chat-message', data: data.message });
+            wss.clients.forEach((client) => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(chatMessage);
                 }
             });
         }

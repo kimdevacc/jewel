@@ -25,6 +25,6 @@ class UserSeeder extends Seeder
             'contact_number' => '0923462374'
         ]);
 
-        \App\Models\User::factory(26)->create();
+        // \App\Models\User::factory(26)->create();
     }
 }

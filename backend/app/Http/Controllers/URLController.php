@@ -23,17 +23,4 @@ class URLController extends Controller
 
         return response()->json(['message' => $url]);
     }
-
-
-    public function _open_in_desktop(Request $request)
-    {
-        $url = $request->input('url');
-        \Log::info('URL received: ' . $url);
-
-        // Generate JavaScript code to open the URL in a new window
-        $script = "window.open('$url', '_blank');";
-
-        // Return a response with JavaScript content
-        return response($script)->header('Content-Type', 'text/javascript');
-    }
 }

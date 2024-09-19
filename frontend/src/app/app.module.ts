@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { QrCodeModule } from 'ng-qrcode';
 import { CustomerLayoutComponent } from './layouts/customer-layout/customer-layout.component';
+import { ChatModule } from './chat/chat.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { CustomerLayoutComponent } from './layouts/customer-layout/customer-layo
 		NgbModule,
 		RouterModule,
 		AppRoutingModule,
-		QrCodeModule
+		QrCodeModule,
+		ChatModule
 	],
 	declarations: [
 		AppComponent,

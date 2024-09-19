@@ -11,6 +11,7 @@ use App\Http\Controllers\URLController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LiveSellingTrxController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,22 @@ Route::post('/verify_credentials', [LiveSellingTrxController::class, 'verify_cre
 Route::get('/live_selling_trx/{id}', [LiveSellingTrxController::class, 'live_selling_trx']);
 Route::get('/get_item_by_item_code/{item_code}', [ItemController::class, 'get_item_by_item_code']);
 
+function sendMessageToWebSocket($message) {
+    $data = [
+        'sender_id' => $message->sender_id,
+        'receiver_id' => $message->receiver_id,
+        'content' => $message->content,
+    ];
+
+    $wsUrl = 'http://localhost:3000/send-message';
+    $ch = curl_init($wsUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_exec($ch);
+    curl_close($ch);
+}
+
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -74,12 +91,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::patch('/customers/{id}', [CustomerController::class, 'update']);
     Route::delete('/customers/{id}', [CustomerController::class, 'destroy']);
 
-    // Route::get('/purchases', [PurchaseController::class, 'index']);
-    // Route::post('/purchases', [PurchaseController::class, 'store']);
-    // Route::get('/purchases/{id}', [PurchaseController::class, 'show']);
-    // Route::patch('/purchases/{id}', [PurchaseController::class, 'update']);
-    // Route::delete('/purchases/{id}', [PurchaseController::class, 'destroy']);
-
     Route::post('/mine', [LiveSellingTrxController::class, 'store']);
     Route::get('/miner-list/{item_code}', [LiveSellingTrxController::class, 'transaction_by_item']);
+
+    Route::post('/chat-history', [MessageController::class, 'messages']);
+    Route::post('/save-chat', [MessageController::class, 'store']);
+
+    Route::post('/send-message', function (Request $request) {
+        $message = new Message();
+        $message->sender_id = $request->input('sender_id');
+        $message->receiver_id = $request->input('receiver_id');
+        $message->content = $request->input('message');
+        $message->save();
+
+        sendMessageToWebSocket($message);
+
+        return response()->json(['status' => 'Message sent!']);
+    });
 });

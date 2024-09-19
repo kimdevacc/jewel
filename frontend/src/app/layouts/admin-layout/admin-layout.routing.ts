@@ -16,6 +16,7 @@ import { LiveSellingComponent } from 'src/app/pages/live-selling/live-selling.co
 import { MinerListComponent } from 'src/app/pages/live-selling/miner-list/miner-list.component';
 import { TrxQrFormComponent } from 'src/app/pages/live-selling/qr/trx-qr-form.component';
 import { SubCategoryComponent } from 'src/app/pages/category/sub-list/sub-category.component';
+import { ChatComponent } from 'src/app/pages/chat/chat.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
@@ -34,5 +35,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'icons', component: IconsComponent },
     { path: 'customer', component: CustomerComponent },
     { path: 'customer/form/:id', component: CustomerFormComponent },
-    { path: 'profile/form/:id', component: UserProfileComponent }
+    { path: 'profile/form/:id', component: UserProfileComponent },
+    { path: 'chat', component: ChatComponent }
 ];

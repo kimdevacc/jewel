@@ -23,6 +23,7 @@ class CreateCustomersTable extends Migration
             $table->text('address')->nullable();
             $table->string('zipcode')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            // $table->foreignId('user_id')->constrained('users');
             $table->rememberToken();
             $table->timestamps();
         });

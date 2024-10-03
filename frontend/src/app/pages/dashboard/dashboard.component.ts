@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
 	public datasets: any;
 	public data: any;
 	public salesChart;
+	public orderChart;
 	public clicked: boolean = true;
 	public clicked1: boolean = false;
 
@@ -34,6 +35,9 @@ export class DashboardComponent implements OnInit {
 	monthlyPurchaseCounts: number[] = [];
 
 	chartOrders = document.getElementById('chart-orders');
+	chartSales = document.getElementById('chart-sales');
+
+	performanceComparison: any;
 
 	constructor(
 		private purchaseService: PurchaseService,
@@ -63,6 +67,8 @@ export class DashboardComponent implements OnInit {
 				if (this.purchaseList) {
 					this.countPurchases();
 					this.calculateMonthlyCounts();
+					this.calculateMonthlyCountsV2();
+					this.calculatePerformancePercentageFromLastMonthToToday();
 				}
 			}
 		});
@@ -131,17 +137,99 @@ export class DashboardComponent implements OnInit {
 				}
 			]
 		}
-		var chartOrders = document.getElementById('chart-orders');
-		new Chart(chartOrders, {
-			type: 'bar',
+		var chartSales = document.getElementById('chart-sales');
+		new Chart(chartSales, {
+			type: 'line',
 			options: chartExample2.options,
 			data: data//chartExample2.data
 		});
 	}
 
+	calculateMonthlyCountsV2(): void {
+		const monthlyCounts = Array(6).fill(0);
+	
+		const currentYear = new Date().getFullYear();
+	
+		this.purchaseList.forEach(purchase => {
+			const createdAt = new Date(purchase.created_at);
+			if (createdAt.getFullYear() === currentYear && createdAt.getMonth() >= 6) {
+				const month = createdAt.getMonth() - 6;
+				monthlyCounts[month]++;
+			}
+		});
+		
+		const data = {
+			labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			datasets: [
+				{
+					label: "Sales",
+					data: monthlyCounts,
+					maxBarThickness: 20
+				}
+			]
+		};
+	
+		var chartOrders = document.getElementById('chart-orders');
+		new Chart(chartOrders, {
+			type: 'bar',
+			options: chartExample2.options,
+			data: data
+		});
+	}
+
+	calculatePerformancePercentageFromLastMonthToToday(): void {
+		// Get the current date
+		const today = new Date();
+		
+		// Calculate the start and end of last month
+		const firstDayOfLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+		const lastDayOfLastMonth = new Date(today.getFullYear(), today.getMonth(), 0); // last day of last month
+		
+		// Calculate the start of the current month
+		const firstDayOfCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+		
+		let lastMonthCount = 0;
+		let currentMonthCount = 0;
+	
+		this.purchaseList.forEach(purchase => {
+			const createdAt = new Date(purchase.created_at);
+			
+			// Check if the purchase is in last month
+			if (createdAt >= firstDayOfLastMonth && createdAt <= lastDayOfLastMonth) {
+				lastMonthCount++;
+			}
+			
+			// Check if the purchase is in the current month up to today
+			if (createdAt >= firstDayOfCurrentMonth && createdAt <= today) {
+				currentMonthCount++;
+			}
+		});
+		
+		// Calculate the performance change as a percentage
+		let performancePercentage = 0;
+		if (lastMonthCount > 0) {
+			performancePercentage = ((currentMonthCount - lastMonthCount) / lastMonthCount) * 100;
+		} else if (currentMonthCount > 0) {
+			// If there were no purchases last month but some in the current month
+			performancePercentage = 100; // Assume 100% increase
+		} else {
+			// No purchases in both months
+			performancePercentage = 0;
+		}
+	
+		this.performanceComparison = {
+			lastMonthCount,
+			currentMonthCount,
+			performancePercentage
+		};
+	}
+
 	public updateOptions() {
 		this.salesChart.data.datasets[0].data = this.data;
 		this.salesChart.update();
+
+		this.orderChart.data.datasets[0].data = this.data;
+		this.orderChart.update();
 	}
 
 }

@@ -16,14 +16,14 @@ class PurchasesSeeder extends Seeder
         $customers = Customer::all();
 
         // Define the number of purchases you want to create
-        $numberOfPurchases = 500; // Adjust this number as needed
+        $numberOfPurchases = 1000; // Adjust this number as needed
 
         // Prepare an array to hold the purchase data
         $purchases = [];
 
         // Generate the dummy data
         for ($i = 0; $i < $numberOfPurchases; $i++) {
-            $randomDate = $this->generateRandomDate('2024-01-01', '2024-12-31');
+            $randomDate = $this->generateRandomDate('2024-01-01', '2024-09-30');
             $purchases[] = [
                 'item_code' => $items->random()->item_code,
                 'ordered_by' => $customers->random()->email,

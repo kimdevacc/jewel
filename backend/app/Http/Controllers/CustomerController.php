@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Resources\CustomerResource;
@@ -16,7 +17,16 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        $user = Customer::create($request->all());
+        $user_req = Customer::create($request->all());
+        if($user_req) {
+            $user = Customer::findOrFail($user_req->id);
+            $hashed_password = Hash::make($request->password);
+            if($user) {
+                $user->update([
+                    'password' => $hashed_password
+                ]);
+            }
+        }
         return new CustomerResource($user);
     }
 

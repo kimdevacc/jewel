@@ -29,4 +29,8 @@ export class LoginComponent {
             alert("Invalid Credentials");
         });
     }
+
+    createNewUser() {
+        this.router.navigate(['register']);
+    }
 }

@@ -73,4 +73,15 @@ class PurchaseController extends Controller
         }
         return PurchaseResource::collection($purchases);
     }
+
+    public function most_bought_items() {
+        $topItems = \DB::table('purchases')
+            ->join('items', 'items.item_code', '=', 'purchases.item_code')
+            ->select('items.item_name as item_name', \DB::raw('COUNT(*) as count'))
+            ->groupBy('items.item_code', 'items.item_name')
+            ->orderByDesc('count')
+            ->limit(5)
+            ->get();
+        return $topItems->toArray();
+    }
 }

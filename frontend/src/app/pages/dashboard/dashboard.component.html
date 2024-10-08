@@ -3,7 +3,7 @@
 		<div class="header-body">
 			<!-- Card stats -->
 			<div class="row">
-				<div class="col-xl-4 col-lg-6">
+				<div class="col-xl-3 col-lg-6">
 					<div class="card card-stats mb-4 mb-xl-0">
 						<div class="card-body">
 							<div class="row">
@@ -23,7 +23,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-4 col-lg-6">
+				<div class="col-xl-3 col-lg-6">
 					<div class="card card-stats mb-4 mb-xl-0">
 						<div class="card-body">
 							<div class="row">
@@ -44,7 +44,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-4 col-lg-6">
+				<div class="col-xl-3 col-lg-6">
 					<div class="card card-stats mb-4 mb-xl-0">
 						<div class="card-body">
 							<div class="row">
@@ -53,8 +53,8 @@
 									<span class="h2 font-weight-bold mb-0">{{ performanceComparison?.performancePercentage }} %</span>
 								</div>
 								<div class="col-auto">
-									<div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-										<i class="fas fa-users"></i>
+									<div class="icon icon-shape bg-blue text-white rounded-circle shadow">
+										<i class="fas fa-angle-double-up"></i>
 									</div>
 								</div>
 							</div>
@@ -64,6 +64,27 @@
 									&emsp;	&ensp; &nbsp; &nbsp;
 								<span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> {{ performanceComparison?.currentMonthCount }}</span>
 								<span class="text-nowrap">Current Month Sale</span>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-lg-6">
+					<div class="card card-stats mb-4 mb-xl-0">
+						<div class="card-body">
+							<div class="row">
+								<div class="col">
+									<h5 class="card-title text-uppercase text-muted mb-0">Top 3 Most Bought Items</h5>
+									<span class="h2 font-weight-bold mb-0">1. Item: {{ mostBoughtItem[0]?.item_name }} - Sold: {{ mostBoughtItem[0]?.count }} pcs</span>
+								</div>
+								<div class="col-auto">
+									<div class="icon icon-shape bg-green text-white rounded-circle shadow">
+										<i class="fas fa-shopping-bag"></i>
+									</div>
+								</div>
+							</div>
+							<p class="mt-0 mb-0 text-muted text-sm">
+								<span class="text-nowrap">2. Item: {{ mostBoughtItem[1]?.item_name }} - Sold: {{ mostBoughtItem[1]?.count }} pcs</span>
+								<span class="text-nowrap">3. Item: {{ mostBoughtItem[2]?.item_name }} - Sold: {{ mostBoughtItem[2]?.count }} pcs</span>
 							</p>
 						</div>
 					</div>

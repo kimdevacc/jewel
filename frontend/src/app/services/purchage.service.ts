@@ -78,4 +78,15 @@ export class PurchaseService {
             })
         );
     }
+
+    mostBoughtItems(): Observable<any> {
+        const url = `http://localhost:8000/api/most_bought_items`;
+        return this.http.get<any>(url).pipe(
+            catchError(error => {
+                console.error(`Error fetching purchase `, error);
+                throw error;
+            })
+        );
+    }
+
 }

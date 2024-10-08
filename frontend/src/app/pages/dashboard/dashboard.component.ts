@@ -38,6 +38,7 @@ export class DashboardComponent implements OnInit {
 	chartSales = document.getElementById('chart-sales');
 
 	performanceComparison: any;
+	mostBoughtItem: any;
 
 	constructor(
 		private purchaseService: PurchaseService,
@@ -48,16 +49,18 @@ export class DashboardComponent implements OnInit {
 	ngOnInit() {
 		this.loadPurchases();
 		this.loadCustomers();
-
+		this.loadMostBoughtItems();
 		parseOptions(Chart, chartOptions());
+	}
 
-		// var chartSales = document.getElementById('chart-sales');
-
-		// this.salesChart = new Chart(chartSales, {
-		// 	type: 'line',
-		// 	options: chartExample1.options,
-		// 	data: this.monthlyPurchaseCounts
-		// });
+	loadMostBoughtItems() {
+		this.purchaseService.mostBoughtItems().subscribe(response => {
+			if (response) {
+				if(response.length > 0) {
+					this.mostBoughtItem = response;
+				}
+			}
+		});
 	}
 
 	loadPurchases() {

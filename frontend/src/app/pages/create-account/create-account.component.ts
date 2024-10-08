@@ -4,11 +4,11 @@ import { Customer } from 'src/app/model/customer.model';
 import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
-    selector: 'app-customer-form',
-    templateUrl: './customer-form.component.html',
-    styleUrls: ['./customer-form.component.scss']
+    selector: 'app-create-account',
+    templateUrl: './create-account.component.html',
+    styleUrls: ['./create-account.component.scss']
 })
-export class CustomerFormComponent implements OnInit {
+export class CreateAccountComponent implements OnInit {
     customer: Customer = { id: null, email: '', password: '', first_name: '', last_name: '', middle_name: '', zipcode: '', address: '' };
 
     routerId: string;
@@ -38,7 +38,7 @@ export class CustomerFormComponent implements OnInit {
     }
 
     saveCustomer() {
-        this.customerService.saveCustomer(this.customer).subscribe(
+        this.customerService.saveNewCustomer(this.customer).subscribe(
             (response) => {
                 // handle success
                 console.log('Customer saved successfully:', response);
@@ -51,38 +51,8 @@ export class CustomerFormComponent implements OnInit {
         );
     }
 
-    updateCustomer() {
-        this.customerService.updateCustomer(this.customer).subscribe(
-            (response) => {
-                // handle success
-                console.log('Customer updated successfully:', response);
-                this.navigateBack();
-            },
-            (error) => {
-                // handle error
-                console.error('Error updating customer:', error);
-            }
-        );
-    }
-
-    deleteCustomer() {
-        this.customerService.deleteCustomer(this.customer.id).subscribe(
-            () => {
-                // handle success
-                console.log('Customer deleted successfully');
-                // Optionally reset the form
-                this.customer = { id: null, email: '', password: '', first_name: '', last_name: '', middle_name: '', zipcode: '', address: '' };
-                this.navigateBack();
-            },
-            (error) => {
-                // handle error
-                console.error('Error deleting customer:', error);
-            }
-        );
-    }
-
     navigateBack() {
         // Navigate back to the customer list
-        this.router.navigate(['admin/customer']);
+        this.router.navigate(['login']);
     }
 }

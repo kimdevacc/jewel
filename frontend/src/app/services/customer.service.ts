@@ -39,6 +39,18 @@ export class CustomerService {
         );
     }
 
+    saveNewCustomer(item: Customer): Observable<Customer> {
+        return this.http.post<Customer>(`${this.apiUrl}/new-customer`, item).pipe(
+            tap((response) => {
+                return response;
+            }),
+            catchError(error => {
+                console.error('Error saving item:', error);
+                throw error; // Rethrow the error after logging
+            })
+        );
+    }
+
     updateCustomer(item: Customer): Observable<Customer> {
         return this.http.patch<Customer>(`${this.apiUrl}/customers/${item.id}`, item, { headers: this.authHeaders }).pipe(
             tap((response) => {

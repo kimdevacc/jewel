@@ -39,10 +39,13 @@ Route::get('/purchases/{id}', [PurchaseController::class, 'show']);
 Route::patch('/purchases/{id}', [PurchaseController::class, 'update']);
 Route::delete('/purchases/{id}', [PurchaseController::class, 'destroy']);
 Route::post('/my-purchases', [PurchaseController::class, 'get_purchase_by_email']);
+Route::get('/most_bought_items', [PurchaseController::class, 'most_bought_items']);
 
 Route::post('/verify_credentials', [LiveSellingTrxController::class, 'verify_credentials']);
 Route::get('/live_selling_trx/{id}', [LiveSellingTrxController::class, 'live_selling_trx']);
 Route::get('/get_item_by_item_code/{item_code}', [ItemController::class, 'get_item_by_item_code']);
+
+Route::post('/new-customer', [CustomerController::class, 'store']);
 
 function sendMessageToWebSocket($message) {
     $data = [

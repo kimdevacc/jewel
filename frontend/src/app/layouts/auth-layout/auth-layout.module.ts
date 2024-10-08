@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AuthLayoutRoutes } from './auth-layout.routing';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoginComponent } from '../../pages/login/login.component';
 import { RegisterComponent } from '../../pages/register/register.component';
+import { CreateAccountComponent } from 'src/app/pages/create-account/create-account.component';
 @NgModule({
 	imports: [
 		CommonModule,
@@ -16,7 +16,8 @@ import { RegisterComponent } from '../../pages/register/register.component';
 	],
 	declarations: [
 		LoginComponent,
-		RegisterComponent
+		RegisterComponent,
+		CreateAccountComponent
 	]
 })
 export class AuthLayoutModule { }

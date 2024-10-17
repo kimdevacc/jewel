@@ -72,3 +72,9 @@ h3 {
 .customer-message .message-content {
   background-color: #5e72e4 !important; // Customer's message color
 }
+.message-image {
+  width: 5in;
+  height: 5in;
+  object-fit: cover;
+  border-radius: 5px;
+}

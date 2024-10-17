@@ -45,10 +45,14 @@
                         <strong>{{ customerName }}</strong>
                         <div class="message-container" *ngFor="let msg of messagesHistory" [ngClass]="msg.sender_id === currentUser ? 'customer-message' : 'owner-message'">
                             <div class="message-content">{{ msg.content }}</div>
+                            <div *ngIf="msg.attachments">
+                                <img [src]="msg.attachments" alt="Attachment" class="message-image" />
+                            </div>
                         </div>
                     </div>
                     <div style="display: grid;">
                         <input [(ngModel)]="customerMessage" class="form-control mb-2" (keypress)="($event.key === 'Enter') ? sendCustomerMessage() : null" placeholder="Type a message..." />
+                        <input type="file" (change)="onFileSelected($event)" class="form-control mb-2" accept="image/*"/>
                         <button class="btn btn-primary btn-sm" (click)="sendCustomerMessage()">Send</button>
                     </div>
                 </div>

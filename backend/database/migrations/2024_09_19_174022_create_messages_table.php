@@ -15,14 +15,17 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->integer('current_user'); // Fixed typo from 'ownder_id' to 'owner_id'
+            $table->integer('current_user');
             $table->integer('sender_id');
             $table->integer('recipient_id');
-            $table->text('content');
-            $table->boolean('read_receipt'); // Corrected this line
+            $table->text('content')->nullable();
+            $table->text("image_name")->nullable();
+            // $table->boolean('read_receipt');
             $table->timestamps();
             $table->softDeletes();
         });
+
+        DB::statement("ALTER TABLE messages ADD attachments LONGBLOB NULL AFTER image_name");
     }
 
     /**

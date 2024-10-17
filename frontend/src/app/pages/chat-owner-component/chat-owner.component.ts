@@ -19,6 +19,7 @@ export class ChatOwnerComponent implements OnInit {
     customerName: string = '';
 
     unreadMessagesCount = 0;
+    selectedImage: File | null = null;
 
     constructor(
         private chatService: ChatService
@@ -60,7 +61,7 @@ export class ChatOwnerComponent implements OnInit {
         this.unreadMessagesCount = 0;
     }
 
-    sendOwnerMessage() {
+    _sendOwnerMessage() {
         let msgVal = {
             current_user: this.currentUser,
             sender_id: this.currentUser,
@@ -75,5 +76,47 @@ export class ChatOwnerComponent implements OnInit {
                 this.customerMessage = '';
             }
         });
+    }
+
+    sendOwnerMessage() {
+        const msgVal = {
+            current_user: this.currentUser,
+            sender_id: this.currentUser,
+            recipient_id: 1,
+            content: this.customerMessage,
+            img: null,
+            img_name: this.selectedImage ? this.selectedImage?.name : null
+        };
+    
+        // Convert image file to base64 if it exists
+        if (this.selectedImage) {
+            const reader = new FileReader();
+            reader.onload = (event: any) => {
+                msgVal.img = event.target.result; // Set base64 string here
+                this.sendMessageToServer(msgVal); // Call a function to send the message
+            };
+            reader.readAsDataURL(this.selectedImage); // Read the file as base64
+        } else {
+            this.sendMessageToServer(msgVal); // Send if no image
+        }
+    }
+    
+    private sendMessageToServer(msgVal: any) {
+        console.log(msgVal); // Log the payload
+        this.chatService.sendMessage(msgVal).subscribe(res => {
+            if (res) {
+                this.socket.send(JSON.stringify({ event: 'chat-message', message: msgVal }));
+                this.messagesHistory.push(msgVal);
+                this.customerMessage = '';
+            }
+        });
+    }
+    
+
+    onFileSelected(event: Event) {
+        const fileInput = event.target as HTMLInputElement;
+        if (fileInput.files && fileInput.files.length > 0) {
+            this.selectedImage = fileInput.files[0];
+        }
     }
 }

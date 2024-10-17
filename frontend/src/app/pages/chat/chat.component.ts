@@ -25,6 +25,8 @@ export class ChatComponent implements OnInit {
     customerId: number = 0;
     customerName: string = '';
 
+    selectedImage: File | null = null;
+
     socket = new WebSocket('ws://localhost:3000');
 
     constructor(
@@ -40,8 +42,8 @@ export class ChatComponent implements OnInit {
 
         this.socket.onmessage = (event) => {
             let obj = JSON.parse(event.data);
-            if(obj?.event === "chat-message") {
-                if(obj?.data?.recipient_id == this.currentUser) {
+            if (obj?.event === "chat-message") {
+                if (obj?.data?.recipient_id == this.currentUser) {
                     this.handleIncomingMessage(obj?.data);
                 }
             }
@@ -73,7 +75,7 @@ export class ChatComponent implements OnInit {
             );
             this.filteredCustomerList.sort().reverse();
         } else {
-            this.filteredCustomerList = [...this.filteredCustomerList.sort().reverse()]; 
+            this.filteredCustomerList = [...this.filteredCustomerList.sort().reverse()];
         }
     }
 
@@ -97,12 +99,12 @@ export class ChatComponent implements OnInit {
         const delta = 2;
         let start = Math.max(1, current - delta);
         let end = Math.min(total, current + delta);
-        
+
         if (end - start < 2 * delta) {
             start = Math.max(1, end - 2 * delta);
         }
-        
-        return Array.from({length: (end - start) + 1}, (_, i) => start + i);
+
+        return Array.from({ length: (end - start) + 1 }, (_, i) => start + i);
     }
 
     openChatHistory(customer: any) {
@@ -115,20 +117,66 @@ export class ChatComponent implements OnInit {
         });
     }
 
-    sendCustomerMessage() {
+    _sendCustomerMessage() {
         let msgVal = {
             current_user: this.currentUser,
             sender_id: this.currentUser,
             recipient_id: this.customerId,
             content: this.customerMessage,
+            img: this.selectedImage ? this.selectedImage : null,
+            img_name: this.selectedImage ? this.selectedImage?.name : null,
             read_receipt: true
-		}
+        }
+        console.log(msgVal);
         this.chatService.sendMessage(msgVal).subscribe(res => {
-            if(res) {
+            if (res) {
                 this.socket.send(JSON.stringify({ event: 'chat-message', message: msgVal }));
                 this.messagesHistory.push(msgVal);
                 this.customerMessage = '';
             }
         });
+    }
+
+    sendCustomerMessage() {
+        const msgVal = {
+            current_user: this.currentUser,
+            sender_id: this.currentUser,
+            recipient_id: this.customerId,
+            content: this.customerMessage,
+            img: null, // Initialize img as null
+            img_name: this.selectedImage ? this.selectedImage?.name : null,
+            read_receipt: true
+        };
+    
+        // Convert image file to base64 if it exists
+        if (this.selectedImage) {
+            const reader = new FileReader();
+            reader.onload = (event: any) => {
+                msgVal.img = event.target.result; // Set base64 string here
+                this.sendMessageToServer(msgVal); // Call a function to send the message
+            };
+            reader.readAsDataURL(this.selectedImage); // Read the file as base64
+        } else {
+            this.sendMessageToServer(msgVal); // Send if no image
+        }
+    }
+    
+    private sendMessageToServer(msgVal: any) {
+        console.log(msgVal); // Log the payload
+        this.chatService.sendMessage(msgVal).subscribe(res => {
+            if (res) {
+                this.socket.send(JSON.stringify({ event: 'chat-message', message: msgVal }));
+                this.messagesHistory.push(msgVal);
+                this.customerMessage = '';
+            }
+        });
+    }
+    
+
+    onFileSelected(event: Event) {
+        const fileInput = event.target as HTMLInputElement;
+        if (fileInput.files && fileInput.files.length > 0) {
+            this.selectedImage = fileInput.files[0];
+        }
     }
 }

@@ -15,6 +15,7 @@ export class TrxQrFormComponent implements OnInit {
     id: string = '';
     email: string = "";
     password: string = "";
+    buildUrl: string = '';
 
     constructor(
         private router: Router,
@@ -30,9 +31,9 @@ export class TrxQrFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        const buildUrl = `http://192.168.1.17:4200/#/customer/purchase/confirm/${this.id}/${encodeURIComponent(this.email)}/${encodeURIComponent(this.password)}`;
-        const currentURL = encodeURIComponent(buildUrl);
-        this.currentURL = `http:/192.168.1.17:8000/api/open-in-desktop?url=${currentURL}`;
+        this.buildUrl = `http://192.168.0.134:4200/#/customer/purchase/confirm/${this.id}/${encodeURIComponent(this.email)}/${encodeURIComponent(this.password)}`;
+        const currentURL = encodeURIComponent(this.buildUrl);
+        this.currentURL = `http:/192.168.0.134:8000/api/open-in-desktop?url=${currentURL}`;
     }
 
     navigateBack() {
@@ -49,4 +50,22 @@ export class TrxQrFormComponent implements OnInit {
         a.click();
         document.body.removeChild(a);
     }
+
+    _copyLink() {
+        console.log(navigator.clipboard);
+        navigator.clipboard.writeText(this.buildUrl);
+        alert("URL copied to clipboard!");
+    }
+
+    copyLink() {
+        // Create a temporary input element
+        const tempInput = document.createElement('input');
+        tempInput.value = this.buildUrl;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+    
+        alert("URL copied to clipboard!");
+      }
 }

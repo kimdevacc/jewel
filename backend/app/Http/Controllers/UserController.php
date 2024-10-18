@@ -57,6 +57,14 @@ class UserController extends Controller
             $updates['address_line_1'] = $request->address_line_1;
         }
 
+        if ($request->has('address') && $request->address !== $user->address) {
+            $updates['address'] = $request->address;
+        }
+
+        if ($request->has('zipcode') && $request->zipcode !== $user->zipcode) {
+            $updates['zipcode'] = $request->zipcode;
+        }
+
         // Hash and update password if provided and modified
         if ($request->has('password')) {
             $newPassword = $request->password;
